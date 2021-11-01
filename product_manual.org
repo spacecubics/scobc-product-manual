@@ -1,0 +1,148 @@
+#+TITLE: Space Cubics OBC製品マニュアル
+#+SUBTITLE:
+#+AUTHOR: Space Cubics
+#+DATE: November 1, 2021
+#+EMAIL: daisuke@spacecubics.com
+#+OPTIONS: ^:{}
+#+OPTIONS: H:6
+
+* はじめに
+Space Cubics OBCは、3U以上の CubeSatをターゲットとする On Board Computer(以下、OBC)です。
+
+Space Cubics OBCはメインプロセッサ用デバイスとして Xilinx製 Artix-7 FPGAを採用し、FPGAにインプリする ARM Cortex-M3を核としたシステムです。
+FPGAを採用する事で、インターフェースの種類や数を Cubesat毎に柔軟に対応する事ができます。
+また、ユーザーの専用IPを実装する事により、特殊な処理を CPUのリソースを使わずに行う事ができ、システムのパフォーマンス向上を見込む事も可能です。
+
+Space Cubics OBCには、メインプロセッサとは別にシステム管理をおこなうためのサブマイコンとして PIC16LF877を搭載します。
+このサブマイコンは Timing, Reset, Config & Health Controller(以下、TRCH)と呼ばれ、FPGA起動前のシステムの管理や、FPGA起動後の異常検知を行います。
+Space Cubics OBCは、TRCHにより異常発生時の自動復帰する機能を実現します。
+
+* 製品概要
+** 仕様
+
+| Feature                                           | Description                                                                                 |
+|---------------------------------------------------+---------------------------------------------------------------------------------------------|
+| メインデバイス                                    | Xilinx Artix-7 (XC7A200T-1FBG676I)                                                          |
+|                                                   | - Logic Cell 215,360                                                                        |
+|                                                   | - CLB スライス数(4 LUT, 8 F/F) 33,650                                                       |
+|                                                   | - CLB 最大分散RAM 2,888 Kb                                                                  |
+|                                                   | - DSP48E1スライス 740                                                                       |
+|                                                   | - BlockRAM 36 Kb x 365 (18 Kb x 730)                                                        |
+|                                                   | - CMT 10                                                                                    |
+|                                                   | - XADC 1                                                                                    |
+|                                                   | - I/O Bank 10                                                                               |
+| メインCPU                                         | ARM Cortex-M3 Design Start FPGA Xilinx Edition r0p1                                         |
+|                                                   | - CPU Revision r2p1                                                                         |
+|                                                   | - ARMv7-M architecture profile                                                              |
+|                                                   | - Maximum operation frewuency up to 96 MHz (T.B.D.)                                         |
+| TRCH                                              | PIC16LF877 8 bit RISC CPU                                                                   |
+|                                                   | - operation frequency 4 MHz                                                                 |
+| FPGA源発信クロック                                | 24 MHz                                                                                      |
+| On Chip SRAM                                      | 64 kByte of FPGA BlockRAM                                                                   |
+|                                                   | - ECC Memory Protection                                                                     |
+|                                                   | - Memory Scrubbing                                                                          |
+| On Borad SRAM                                     | 4 MByte Asynchronouse Static RAM (CY7C1061GE)                                               |
+| NOR Flash for Configuration and Code Flash Memory | 32 MByte/Redundancy (S25FL256L)                                                             |
+| NOR Flash for Data Memory                         | 32 MByte/Redundancy (S25FL256L)                                                             |
+| FeRAM                                             | 512 kByte x 2 (CY15B104QSN)                                                                 |
+| Control Area Network (CAN)                        | Conforms to the ISO 11898-1, CAN2.0A, and CAN2.0B standards Supports bit rates up to 1 Mb/s |
+| Space Communication Bus (SCBus)                   | Compliant with the USB-based communication interface proposed by Space Cubics (T.B.D.)      |
+|                                                   | - Supports bit rates 12 Mbps (USB Full-Speed)                                               |
+| I2C Interface                                     | Accessible from FPGA and TRCH x 1                                                           |
+| Serial Interface                                  | TRCH UART Interface x 1                                                                     |
+| FPGA User IO                                      | User IO Group 1 x 16 pin (IO電圧可変)                                                       |
+|                                                   | User IO Group 2 x 16 pin (IO電圧可変)                                                       |
+|                                                   | User IO Group 3 x 4 pin (3.3V固定)                                                          |
+| 電源電圧                                          | DC 3.5 〜　5.5 V (T.B.D.)                                                                   |
+| 消費電力                                          | 2.0 W (Max)                                                                                 |
+| 使用温度範囲                                      | -40 〜 80 ℃ (T.B.D.)                                                                       |
+| 外形サイズ                                        | 70 mm x 70 mm (T.B.D.)                                                                      |
+
+** Block Diagram
+Space Cubics OBCは、FPGAを採用することによる高い柔軟性を維持するために、OBC Moduleと IO Boardの 2枚の基板で構成されます。
+
+OBC Moduleは、Space Cubics OBCを採用するシステムのインターフェース構成が変わっても影響しない再利用性の高い機能が実装されています。
+一方、IO Boardにはインターフェースの電気的特性を満たすために必要は Transceiver ICや プロトコルコンバータ ICなど、システム構成に影響を受ける機能を実装します。
+
+Space Cubics OBCを使うユーザーは、衛星のシステムが変更になっても IO Boardを再設計する事で、新しい衛星に適合させる事ができます。
+衛星のシステムが変わっても、同じ OBC Moduleを採用するシステムでは、多くのソフトウェア資産を流用する事ができます。
+
+OBC Moduleと IO Boardは 80ピンの B to Bコネクタで接続します。
+
+#+CAPTION: OBC Module Block Diagram
+[[file:./images/BlockDiagram.png]]
+
+* インターフェース仕様
+** 機能信号一覧
+
+| Interface            | Signal        | Direction | Description                            |
+|----------------------+---------------+-----------+----------------------------------------|
+| CAN Interface        | CANH          | Inout     | FPGA/TRCH CAN High Signal              |
+|                      | CANL          | Inout     | FPGA/TRCH CAN Low Signal               |
+| I2C Interface        | I2C_EXT_SCL   | Output    | FPGA/TRCH I2C SCL Signal               |
+|                      | I2C_EXT_SDA   | Inout     | FPGA/TRCH I2C SDA Signal               |
+| TRCH UART Interface  | TRCH_UART_TX  | Output    | TRCH UART TX Signal                    |
+|                      | TRCH_UART_RX  | Input     | TRCH UART RX Signal                    |
+|                      | TRCH_UART_EN  | Output    | TRCH UART Enable Signal                |
+| User IO Group 1      | UIO1_[15:0]   | Inout     | FPGA User IO Group 1 Signal 16 bit     |
+| User IO Group 2      | UIO2_[15:0]   | Inout     | FPGA User IO Group 2 Signal 16 bit     |
+| User IO Group 3      | UIO3_[3:0]    | Inout     | FPGA/TRCH User IO Group 3 Signal 4 bit |
+| SC Bus               | ULPI_DP       | Inout     | SC Bus D+ Signal                       |
+|                      | ULPI_DM       | Inout     | SC Bus D- Signal                       |
+| Watch Dog            | WDOG_OUT      | Output    | Watchdog Output                        |
+| TRCH Debug Interface | ICSP_MCLR_B   | Input     | PIC MCLR                               |
+|                      | ICSP_PGC      | Inout     | PIC PGC                                |
+|                      | ICSP_PGD      | Inout     | PIC PGD                                |
+| FPGA Debug Interface | FPGA_TCK      | Input     | FPGA JTAG TCK                          |
+|                      | FPGA_TMS      | Input     | FPGA JTAG TMS                          |
+|                      | FPGA_TDI      | Input     | FPGA JTAG TDI                          |
+|                      | FPGA_TDO      | Output    | FPGA JTAG TDO                          |
+| CM3 Debug Interface  | CM3_NTRST     | Input     | Cortex-M3 JTAG NTRST                   |
+|                      | CM3_TDI       | Input     | Cortex-M3 JTAG TDI                     |
+|                      | CM3_TCK_SWCLK | Input     | Cortex-M3 JTAG TCK / SerialWire SWCLK  |
+|                      | CM3_TMS_SWDIO | Inout     | Cortex-M3 JTAG TMS / SerialWire SWDIO  |
+|                      | CM3_TDO_SWO   | Output    | Cortex-M3 JTAG TDO / SerialWire SWO    |
+
+* FPGAシステム仕様
+Space Cubics OBCのFPGAは、 Space Cubics OBCの主要機能を司るプロセッサです。
+この章では Configuration後の FPGA機能について説明します。
+
+#+CAPTION: Space Cubics OBC FPGA Block Diagram
+[[file:./images/FPGA_BlockDiagram.png]]
+
+Space Cubics OBCは ARM Cortex-M3を CPUに採用したシステムを構築します。
+
+** FPGAシステム構成概要
+システムは大きく 6つの機能に分割されます。
+
+- System Controller
+System Controllerは、FPGAのクロック, リセットを生成するためのモジュールです。
+このモジュールで生成されるクロック, リセットは、FPGA全体に供給されます。
+
+- CPU (ARM Cortex-M3)
+Space Cubics OBCの FPGA機能を司る CPUを構成するモジュールです。
+CPUはソフトコアで実装し、ARM Cortex-M3 Design Start FPGA-Xilinx editionを採用します。
+
+- Main Memory System
+Main Memory Systemは CPUが私用するメモリシステムである。
+CPUとの接続は AXIで行われ、本システムは CPU Local Busとして実装します。
+
+CPU Local Busは CPUモジュール内部の ARM Cortex-M3の Instruction code AHB, Data code AHBをまとめたバスとして構成されています。
+このバスは AXI Interconnectorなどで分岐せず、メモリを直接付加し構成する事で Instructionアクセスのレイテンシーを最小限に抑えるよう設計されています。
+
+- Main AXI Bus System
+Main AXI Bus Systemは、CubeSat向けの OBCシステムとして必須となる機能の中で、アクセススピードが比較的重視されるIPをまとまたシステムです。
+
+このバスには、コンピュータシステムとして必要なメモリコントロールIPや CubeSatのメインの通信バスとなる CANのコントローラIPなどが接続されています。
+
+- Low Performance AHB System
+Low Performance AHB Systemは、CubeSat向け OBCシステムとして必須となる機能の中、アクセス頻度の低いIPをまとめたシステムです。
+
+このシステムはバスに AHBを採用する事で、IPの回路規模を小さくする事ができます。
+このバスには、システムレジスタやI2Cコントローラなどが接続されます。
+
+- Mission Bus System
+Mission Bus SystemはCubeSatのミッションを行うためのIPを接続するシステムです。
+
+ユーザーのロジックをはじめとするミッションに関わるIPはこのバスに接続されます。
+
