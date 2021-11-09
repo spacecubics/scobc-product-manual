@@ -75,33 +75,29 @@ OBC Moduleと IO Boardは 80ピンの B to Bコネクタで接続します。
 * インターフェース仕様
 ** 機能信号一覧
 
-| Interface            | Signal        | Direction | Description                            |
-|----------------------+---------------+-----------+----------------------------------------|
-| CAN Interface        | CANH          | Inout     | FPGA/TRCH CAN High Signal              |
-|                      | CANL          | Inout     | FPGA/TRCH CAN Low Signal               |
-| I2C Interface        | I2C_EXT_SCL   | Output    | FPGA/TRCH I2C SCL Signal               |
-|                      | I2C_EXT_SDA   | Inout     | FPGA/TRCH I2C SDA Signal               |
-| TRCH UART Interface  | TRCH_UART_TX  | Output    | TRCH UART TX Signal                    |
-|                      | TRCH_UART_RX  | Input     | TRCH UART RX Signal                    |
-|                      | TRCH_UART_EN  | Output    | TRCH UART Enable Signal                |
-| User IO Group 1      | UIO1_[15:0]   | Inout     | FPGA User IO Group 1 Signal 16 bit     |
-| User IO Group 2      | UIO2_[15:0]   | Inout     | FPGA User IO Group 2 Signal 16 bit     |
-| User IO Group 3      | UIO3_[3:0]    | Inout     | FPGA/TRCH User IO Group 3 Signal 4 bit |
-| SC Bus               | ULPI_DP       | Inout     | SC Bus D+ Signal                       |
-|                      | ULPI_DM       | Inout     | SC Bus D- Signal                       |
-| Watch Dog            | WDOG_OUT      | Output    | Watchdog Output                        |
-| TRCH Debug Interface | ICSP_MCLR_B   | Input     | PIC MCLR                               |
-|                      | ICSP_PGC      | Inout     | PIC PGC                                |
-|                      | ICSP_PGD      | Inout     | PIC PGD                                |
-| FPGA Debug Interface | FPGA_TCK      | Input     | FPGA JTAG TCK                          |
-|                      | FPGA_TMS      | Input     | FPGA JTAG TMS                          |
-|                      | FPGA_TDI      | Input     | FPGA JTAG TDI                          |
-|                      | FPGA_TDO      | Output    | FPGA JTAG TDO                          |
-| CM3 Debug Interface  | CM3_NTRST     | Input     | Cortex-M3 JTAG NTRST                   |
-|                      | CM3_TDI       | Input     | Cortex-M3 JTAG TDI                     |
-|                      | CM3_TCK_SWCLK | Input     | Cortex-M3 JTAG TCK / SerialWire SWCLK  |
-|                      | CM3_TMS_SWDIO | Inout     | Cortex-M3 JTAG TMS / SerialWire SWDIO  |
-|                      | CM3_TDO_SWO   | Output    | Cortex-M3 JTAG TDO / SerialWire SWO    |
+| Interface            | Signal        | Direction | Description                                         |
+|----------------------+---------------+-----------+-----------------------------------------------------|
+| CAN Interface        | CANH          | Inout     | FPGA/TRCH CAN High Signal                           |
+|                      | CANL          | Inout     | FPGA/TRCH CAN Low Signal                            |
+| I2C Interface        | I2C_EXT_SCL   | Output    | FPGA/TRCH I2C SCL Signal                            |
+|                      | I2C_EXT_SDA   | Inout     | FPGA/TRCH I2C SDA Signal                            |
+| TRCH UART Interface  | TRCH_UART_TX  | Output    | TRCH UART TX Signal                                 |
+|                      | TRCH_UART_RX  | Input     | TRCH UART RX Signal                                 |
+|                      | TRCH_UART_EN  | Output    | TRCH UART Enable Signal                             |
+| User IO Group 1      | UIO1_[15:0]   | Inout     | FPGA User IO Group 1 Signal 16 bit                  |
+| User IO Group 2      | UIO2_[15:0]   | Inout     | FPGA User IO Group 2 Signal 16 bit                  |
+| User IO Group 3      | UIO3_[3:0]    | Inout     | TRCH User IO Group 3 Signal 4 bit                   |
+| User IO Group 4      | UIO4_[5:0]    | Inout     | FPGA User IO Group 4 Signal 6 bit / CM3 JTAG Signal |
+| SC Bus               | ULPI_DP       | Inout     | SC Bus D+ Signal                                    |
+|                      | ULPI_DM       | Inout     | SC Bus D- Signal                                    |
+| Watch Dog            | WDOG_OUT      | Output    | Watchdog Output                                     |
+| TRCH Debug Interface | ICSP_MCLR_B   | Input     | PIC MCLR                                            |
+|                      | ICSP_PGC      | Inout     | PIC PGC                                             |
+|                      | ICSP_PGD      | Inout     | PIC PGD                                             |
+| FPGA Debug Interface | FPGA_TCK      | Input     | FPGA JTAG TCK                                       |
+|                      | FPGA_TMS      | Input     | FPGA JTAG TMS                                       |
+|                      | FPGA_TDI      | Input     | FPGA JTAG TDI                                       |
+|                      | FPGA_TDO      | Output    | FPGA JTAG TDO                                       |
 
 * FPGAシステム仕様
 Space Cubics OBCのFPGAは、 Space Cubics OBCの主要機能を司るプロセッサです。
