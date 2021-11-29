@@ -52,7 +52,8 @@ Space Cubics OBCは、TRCHにより異常発生時の自動復帰する機能を
 | Serial Interface                                  | TRCH UART Interface x 1                                                                     |
 | FPGA User IO                                      | User IO Group 1 x 16 pin (IO電圧可変)                                                       |
 |                                                   | User IO Group 2 x 16 pin (IO電圧可変)                                                       |
-|                                                   | User IO Group 3 x 4 pin (3.3V固定)                                                          |
+|                                                   | User IO Group 4 x 6 pin, Cortex-M3 JTAG兼用 (3.3V固定)                                      |
+| TRCH User IO                                      | User IO Group 3 x 3 pin (3.3V固定)                                                          |
 | 電源電圧                                          | DC 3.5 〜　5.5 V (T.B.D.)                                                                   |
 | 消費電力                                          | 2.0 W (Max)                                                                                 |
 | 使用温度範囲                                      | -40 〜 80 ℃ (T.B.D.)                                                                       |
