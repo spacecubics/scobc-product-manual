@@ -182,6 +182,36 @@ OBCへの電源は VIN_A, VIN_Bから入力します。
 VIN_Aと VIN_Bは、冗長化の目的で OBC内部で別々の電源回路にて、OBC内部の電源を生成しています。
 OBCに入力する電源が 1系統しか無い場合、VIN_Aと VIN_Bにはすべて同じ電源を接続して構いません。
 
+*** User IO Group 1, 2
+User IO Group 1, 2は、FPGAに接続され、ユーザーが自由に使用できる信号です。
+User IO Group 1は FPGAの Bank 34、User IO Group 2は FPGAの Bank 35を専有しています。
+
+| User IO | 信号名規則    | IO本数 | FPGA Bank | 対応するIO電源ピン |
+|---------+---------------+--------+-----------+--------------------|
+| Group 1 | UIO1_(Number) | 16本   | Bank 34   | VDD_UIO1           |
+| Group 2 | UIO2_(Number) | 16本   | Bank 35   | VDD_UIO2           |
+
+User IO Groupは VDD_UIO1, VDD_UIO02に任意の IO電圧を印加し使用する事ができます。
+FPGAで使用したいIOに合ったIO電圧を印加してください。
+
+FPGAの IO電源 (VCCO)は、FPGAの電源投入シーケンスに従い投入する必要があります。
+OBC Moduleが出力する VDD_3V3信号が Highになった時のみ電圧を印加する事で、FPGAの電源シーケンスを守る事ができます。
+
+以下の回路構成例を参考に、回路を構成してください。
+回路例は User IO Group 1の場合の例のため、User Io Group 2に適用する場合、ピン番号などを読み替えてください。
+
+#+CAPTION: User IO Group 1を 3.3 Vで使用する場合の回路構成例
+#+ATTR_HTML: :width 350
+[[file:./images/user_io_vdd33.png]]
+
+User IOを 3.3 Vで使用する場合で、且つ IO Boardの回路の消費電流が 0.3 A未満の場合は、VDD_3V3を電源として使う事ができます。
+
+#+CAPTION: User IO Group 1を 1.6Vで使用する場合の回路構成例
+#+ATTR_HTML: :width 350
+[[file:./images/user_io_vdd16.png]]
+
+User IOを 1.6 Vで使用する場合や、IO Boardの回路の消費電流が 0.3 A以上の場合は、VDD_3V3をイネーブル信号とし、IO Board上で生成した電源を供給してください。
+
 * FPGAシステム仕様
 Space Cubics OBCのFPGAは、 Space Cubics OBCの主要機能を司るプロセッサです。
 この章では Configuration後の FPGA機能について説明します。
