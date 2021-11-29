@@ -67,7 +67,7 @@ OBC Moduleは、Space Cubics OBCを採用するシステムのインターフェ
 Space Cubics OBCを使うユーザーは、衛星のシステムが変更になっても IO Boardを再設計する事で、新しい衛星に適合させる事ができます。
 衛星のシステムが変わっても、同じ OBC Moduleを採用するシステムでは、多くのソフトウェア資産を流用する事ができます。
 
-OBC Moduleと IO Boardは 80ピンの B to Bコネクタで接続します。
+OBC Moduleと IO Boardは 80ピンの Board to Boardコネクタで接続します。
 
 #+CAPTION: OBC Module Block Diagram
 [[file:./images/BlockDiagram.png]]
