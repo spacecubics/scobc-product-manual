@@ -37,7 +37,7 @@ Space Cubics OBCは、TRCHにより異常発生時の自動復帰する機能を
 |                                                   | - Maximum operation frewuency up to 96 MHz (T.B.D.)                                         |
 | TRCH                                              | PIC16LF877 8 bit RISC CPU                                                                   |
 |                                                   | - operation frequency 4 MHz                                                                 |
-| FPGA源発信クロック                                | 24 MHz                                                                                      |
+| FPGA源発振クロック                                | 24 MHz                                                                                      |
 | On Chip SRAM                                      | 64 kByte of FPGA BlockRAM                                                                   |
 |                                                   | - ECC Memory Protection                                                                     |
 |                                                   | - Memory Scrubbing                                                                          |
