@@ -29,7 +29,7 @@ Space Cubics OBCは、TRCHにより異常発生時の自動復帰する機能を
 |                                                   | - DSP48E1スライス 740                                                                       |
 |                                                   | - BlockRAM 36 Kb x 365 (18 Kb x 730)                                                        |
 |                                                   | - CMT 10                                                                                    |
-|                                                   | - XADC 1                                                                                    |
+|                                                   | - XADC 1 (for FPGA die temperature measurement)                                             |
 |                                                   | - I/O Bank 10                                                                               |
 | メインCPU                                         | ARM Cortex-M3 Design Start FPGA Xilinx Edition r0p1                                         |
 |                                                   | - CPU Revision r2p1                                                                         |
