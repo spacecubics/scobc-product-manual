@@ -103,12 +103,12 @@ IO Boardインターフェースは、OBC Moduleと IO Boardを接続するた�
 |       15 | GND          | Power  | -            | 電源(GND)                                                     |
 |       16 | UIO1_08      | Inout  | VDD_UIO1     | User IO1 Bit 8信号、FPGAの IO_L7P_T1_34 (pin: K1)に接続       |
 |       17 | UIO1_09      | Inout  | VDD_UIO1     | User IO1 Bit 9信号、FPGAの IO_L7N_T1_34 (pin: J1)に接続       |
-|       18 | UIO1_10      | Inout  | VDD_UIO1     | User IO1 Bit 10信号、FPGAの IO_L9N_T1_DQS_34 (pin: N1)に接続  |
+|       18 | UIO1_10      | Inout  | VDD_UIO1     | User IO1 Bit 10信号、FPGAの IO_L9P_T1_DQS_34 (pin: N1)に接続  |
 |       19 | UIO1_11      | Inout  | VDD_UIO1     | User IO1 Bit 11信号、FPGAの IO_L9N_T1_DQS_34 (pin: M1)に接続  |
-|       20 | UIO1_12      | Inout  | VDD_UIO1     | User IO1 Bit 12信号、FPGAの IO_L18P_T2_34 (pin: R3)に接続     |
-|       21 | UIO1_13      | Inout  | VDD_UIO1     | User IO1 Bit 13信号、FPGAの IO_L18N_T2_34 (pin: P3)に接続     |
-|       22 | UIO1_14      | Inout  | VDD_UIO1     | User IO1 Bit 14信号、FPGAの IO_L10P_T1_34 (pin: K3)に接続     |
-|       23 | UIO1_15      | Inout  | VDD_UIO1     | User IO1 Bit 15信号、FPGAの IO_L10N_T1_34 (pin: H1)に接続     |
+|       20 | UIO1_12      | Inout  | VDD_UIO1     | User IO1 Bit 12信号、FPGAの IO_L18P_T2_34 (pin: U2)に接続     |
+|       21 | UIO1_13      | Inout  | VDD_UIO1     | User IO1 Bit 13信号、FPGAの IO_L18N_T2_34 (pin: U1)に接続     |
+|       22 | UIO1_14      | Inout  | VDD_UIO1     | User IO1 Bit 14信号、FPGAの IO_L1P_T0_34 (pin: K3)に接続      |
+|       23 | UIO1_15      | Inout  | VDD_UIO1     | User IO1 Bit 15信号、FPGAの IO_L1N_T0_34 (pin: J3)に接続      |
 |       24 | GND          | Power  | -            | 電源(GND)                                                     |
 |       25 | UIO3_00      | Inout  | VDD_3V3_IO   | User IO3 Bit 0信号、PIC16LF877の RD4/PSP4に接続               |
 |       26 | UIO3_01      | Inout  | VDD_3V3_IO   | User IO3 Bit 1信号、PIC16LF877の RD5/PSP5に接続               |
@@ -135,8 +135,8 @@ IO Boardインターフェースは、OBC Moduleと IO Boardを接続するた�
 |       43 | UIO4_05      | Inout  | VDD_3V3_IO   | User IO4 Bit 5/CM3 NTRST信号、FPGAの IO_0_13 (pin: U24)に接続                |
 |       44 | UIO4_04      | Inout  | VDD_3V3_IO   | User IO4 Bit 4/CM3 TDO,SWO信号、FPGAの IO_L16P_T2_13 (pin: W20)に接続        |
 |       45 | UIO4_03      | Inout  | VDD_3V3_IO   | User IO4 Bit 3/CM3 TDI信号、FPGAの IO_L16N_T2_13 (pin: Y20)に接続            |
-|       46 | UIO4_02      | Inout  | VDD_3V3_IO   | User IO4 Bit 2/CM3 TCK,SWCLK信号、FPGAの IO_L14N_T2_SRCC_13 (pin: Y21)に接続 |
-|       47 | UIO4_01      | Inout  | VDD_3V3_IO   | User IO4 Bit 1/CM3 TMS,SWDIO信号、FPGAの IO_L14P_T2_SRCC_13 (pin: W21)に接続 |
+|       46 | UIO4_02      | Inout  | VDD_3V3_IO   | User IO4 Bit 2/CM3 TMS,SWDIO信号、FPGAの IO_L14N_T2_SRCC_13 (pin: Y21)に接続 |
+|       47 | UIO4_01      | Inout  | VDD_3V3_IO   | User IO4 Bit 1/CM3 TCK,SWCLK信号、FPGAの IO_L14P_T2_SRCC_13 (pin: W21)に接続 |
 |       48 | GND          | Power  | -            | 電源(GND)                                                                    |
 |       49 | ICPS_PGD     | Inout  | VDD_3V3_IO   | PIC PGD信号、PIC16LF877の RB7/PGDに接続                                      |
 |       50 | ICPS_PGC     | Inout  | VDD_3V3_IO   | PIC PGC信号、PIC16LF877の RB6/PGCに接続                                      |
@@ -148,7 +148,7 @@ IO Boardインターフェースは、OBC Moduleと IO Boardを接続するた�
 |       56 | FPGA_TMS     | Output | VDD_3V3_IO   | FPGA JTAG TMS信号、FPGAの TMS_0 (pin: H11)に接続                             |
 |       57 | GND          | Power  | -            | 電源(GND)                                                                    |
 |       58 | UIO2_15      | Inout  | VDD_UIO2     | User IO2 Bit 15信号、FPGAの IO_L16N_T2_35 (pin: A4)に接続                    |
-|       59 | UIO2_14      | Inout  | VDD_UIO2     | User IO2 Bit 14信号、FPGAの IO_L16N_T2_35 (pin: B4)に接続                    |
+|       59 | UIO2_14      | Inout  | VDD_UIO2     | User IO2 Bit 14信号、FPGAの IO_L16P_T2_35 (pin: B4)に接続                    |
 |       60 | UIO2_13      | Inout  | VDD_UIO2     | User IO2 Bit 13信号、FPGAの IO_L20N_T3_35 (pin: A2)に接続                    |
 |       61 | UIO2_12      | Inout  | VDD_UIO2     | User IO2 Bit 12信号、FPGAの IO_L20P_T3_35 (pin: A3)に接続                    |
 |       62 | UIO2_11      | Inout  | VDD_UIO2     | User IO2 Bit 11信号、FPGAの IO_L24N_T3_35 (pin: G1)に接続                    |
