@@ -57,7 +57,7 @@ Space Cubics OBCは、TRCHにより異常発生時の自動復帰する機能を
 | 電源電圧                                          | DC 5.0V ± 10%                                                                              |
 | 消費電力                                          | 2.0 W (Max)                                                                                 |
 | 使用温度範囲                                      | -40 〜 80 ℃ (T.B.D.)                                                                       |
-| 外形サイズ                                        | 70 mm x 70 mm (T.B.D.)                                                                      |
+| 外形サイズ                                        | 70 mm x 70 mm                                                                               |
 
 ** Block Diagram
 Space Cubics OBCは、FPGAを採用することによる高い柔軟性を維持するために、OBC Moduleと IO Boardの 2枚の基板で構成されます。
