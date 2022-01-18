@@ -123,9 +123,9 @@ IO Boardインターフェースは、OBC Moduleと IO Boardを接続するた�
 |       31 | TRCH_UART_RX | Input  | VDD_3V3_IO   | TRCH UART RX信号、PIC16LF877の RC7/RX/DTに接続                               |
 |       32 | TRCH_UART_EN | Output | VDD_3V3_IO   | TRCH UART Enable信号、PIC16LF877の RC2/CCP1に接続                            |
 |       33 | GND          | Power  | -            | 電源(GND)                                                                    |
-|       34 | I2C_EXT_SCL  | Output | VDD_3V3_IO   | TRCH UART TX信号、PIC16LF877の RC6/TX/CKに接続                               |
-|       35 | I2C_EXT_SDA  | Inout  | VDD_3V3_IO   | TRCH UART RX信号、PIC16LF877の RC7/RX/DTに接続                               |
-|       36 | WDOG_OUT     | Output | VDD_3V3_IO   | TRCH UART Enable信号、PIC16LF877の RC2/CCP1に接続                            |
+|       34 | I2C_EXT_SCL  | Output | VDD_3V3_IO   | TRCH UART TX信号、PIC16LF877の RD2/PSP2に接続                                |
+|       35 | I2C_EXT_SDA  | Inout  | VDD_3V3_IO   | TRCH UART RX信号、PIC16LF877の RD3/PSP3に接続                                |
+|       36 | WDOG_OUT     | Output | VDD_3V3_IO   | TRCH UART Enable信号、PIC16LF877の RE0/AN5/RDに接続                          |
 |       37 | VDD_3V3_IO   | Power  | -            | 電源(VDD_3V3_IO)出力                                                         |
 |       38 | VDD_3V3_IO   | Power  | -            | 電源(VDD_3V3_IO)出力                                                         |
 |       39 | VDD_UIO1     | Power  | -            | 電源(VDD_UIO1)                                                               |
