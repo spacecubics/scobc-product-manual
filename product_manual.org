@@ -54,7 +54,7 @@ Space Cubics OBCは、TRCHにより異常発生時の自動復帰する機能を
 |                                                   | User IO Group 2 x 16 pin (IO電圧可変)                                                       |
 |                                                   | User IO Group 4 x 6 pin, Cortex-M3 JTAG兼用 (3.3V固定)                                      |
 | TRCH User IO                                      | User IO Group 3 x 3 pin (3.3V固定)                                                          |
-| 電源電圧                                          | DC 3.5 〜　5.5 V (T.B.D.)                                                                   |
+| 電源電圧                                          | DC 5.0V ± 10%                                                                              |
 | 消費電力                                          | 2.0 W (Max)                                                                                 |
 | 使用温度範囲                                      | -40 〜 80 ℃ (T.B.D.)                                                                       |
 | 外形サイズ                                        | 70 mm x 70 mm (T.B.D.)                                                                      |
@@ -178,7 +178,7 @@ IO Boardインターフェースは、OBC Moduleと IO Boardを接続するた�
 *** 電源入力
 OBCへの電源は VIN_A, VIN_Bから入力します。
 
-電源電圧の入力範囲は 3.5 〜 5.5Vです。
+電源電圧の入力範囲は 5.0V±10%です。
 
 VIN_Aと VIN_Bは、冗長化の目的で OBC内部で別々の電源回路にて、OBC内部の電源を生成しています。
 OBCに入力する電源が 1系統しか無い場合、VIN_Aと VIN_Bにはすべて同じ電源を接続して構いません。
