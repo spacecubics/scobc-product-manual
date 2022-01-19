@@ -73,6 +73,18 @@ OBC Moduleと IO Boardは 80ピンの Board to Boardコネクタで接続しま�
 #+CAPTION: OBC Module Block Diagram
 [[file:./images/BlockDiagram.png]]
 
+* 電気的仕様
+** 電源回路の構成
+OBC Moduleの電源回路の構成は次のとおりです。
+電源入力 VIN_A (CON1 1, 2, 3)と VIN_B (CON1 78, 79, 80)は冗長化されており、別々の回路で内部電源を生成します。
+入力された電圧を電源ICで各電圧に変換し、内部回路及び 外部出力端子に供給しています。
+
+生成された電源出力ノードには Current and Voltage Monitorが付加されており、TRCHおよびFPGAから電源の状態を監視する事ができます。
+
+#+CAPTION: 電源回路の構成
+#+ATTR_HTML: :width 600
+[[file:./images/power_supply_circuit.png]]
+
 * インターフェース仕様
 Space Cubics OBC Moduleのインターフェース仕様について説明します。
 
