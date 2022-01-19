@@ -213,6 +213,44 @@ User IOを 3.3 Vで使用する場合で、且つ IO Boardの回路の消費電�
 
 User IOを 1.6 Vで使用する場合や、IO Boardの回路の消費電流が 0.3 A以上の場合は、VDD_3V3をイネーブル信号とし、IO Board上で生成した電源を供給してください。
 
+*** デバッガ接続
+**** MPLAB PICkit4
+TRCHの ソフトウェアの書き込みは Microchip製 MPLAB PICKit4により行う事ができます。
+
+MPLAB PICKit4は、OBC Moduleの以下のピンに接続してください。
+
+| MPLAB PICKit4 | OBC Module CON1 Pin No.               |
+|---------------+---------------------------------------|
+| 1: MCLR       | 51                                    |
+| 2: VDD        | OBC電源信号 (37, 38など)              |
+| 3: Ground     | 6, 15, 24, 29, 33, 48, 52, 57, 66, 75 |
+| 4: PGD        | 49                                    |
+| 5: PGC        | 50                                    |
+| 6: N.C.       | 未接続                                |
+| 7: N.C.       | 未接続                                |
+| 8: N.C.       | 未接続                                |
+
+#+ATTR_HTML: :width 200
+[[file:./images/mplab_pickit4_connect.png]]
+
+**** Platform Cable USB II
+FPGAの書き込みや In Circuit Debugは Xilinx製 Platform cable USB IIにより行う事ができます。
+
+Platform cable USB IIは、OBC Moduleの以下のピンに接続してください。
+
+| Platform cable USB II | OBC Module CON1 Pin No.               |
+|-----------------------+---------------------------------------|
+| VREF                  | OBC電源信号 (37, 38など)              |
+| GND                   | 6, 15, 24, 29, 33, 48, 52, 57, 66, 75 |
+| TCK                   | 53                                    |
+| HALT                  | 未接続                                |
+| TDO                   | 54                                    |
+| TDI                   | 55                                    |
+| TMS                   | 56                                    |
+
+#+ATTR_HTML: :width 300
+[[file:./images/platform_cable_connect.png]]
+
 * FPGAシステム仕様
 Space Cubics OBCのFPGAは、 Space Cubics OBCの主要機能を司るプロセッサです。
 この章では Configuration後の FPGA機能について説明します。
