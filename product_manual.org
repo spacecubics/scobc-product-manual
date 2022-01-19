@@ -263,6 +263,42 @@ Platform cable USB IIは、OBC Moduleの以下のピンに接続してくださ�
 #+ATTR_HTML: :width 300
 [[file:./images/platform_cable_connect.png]]
 
+* ボードステータス回路
+OBC Moduleには、OBCのボードステータス(電源状態、温度状態)を監視する機能を搭載しています。
+
+** 電源状態監視
+OBC Moduleで生成された電源のノードには、Current and Voltage Monitorが付加されています。
+Current and Voltage Monitor ICには、TEXAS INSTRUMENTSの INA3221-Q1が採用されており、I2C Interfaceによって TRCHと FPGAからデータを読み出す事ができます。
+
+Current and Voltage Monitorの監視ノードは以下の通りです。
+
+| Current/Voltage Monitor No. | Slave Address | Channel | Node          |
+|-----------------------------+---------------+---------+---------------|
+|                           1 |          0x40 |       1 | VDD_1V0       |
+|                             |               |       2 | VDD_1V8       |
+|                             |               |       3 | VDD_3V3       |
+|                           2 |          0x41 |       1 | VDD_3V3_SYS_A |
+|                             |               |       2 | VDD_3V3_SYS_B |
+|                             |               |       3 | VDD_3V3_IO    |
+
+Current and Voltage Monitorのアクセス方法は INA3221-Q1のデータシートを参照してください。
+
+** 温度状態監視
+OBC Moduleには、OBCの温度状態をモニタするため 3つの温度センサーを搭載しています。
+温度センサー ICには、TEXAS INSTRUMENTSの TMQ175-Q1が採用されており、I2C Interfaceによって TRCHと FPGAからデータを読み出す事ができます。
+
+温度センサーの搭載位置と Slave Addressは以下の通りです。
+
+#+CAPTION: 温度センサー搭載位置
+#+ATTR_HTML: :width 190
+[[file:./images/temperature_sensor_layout.png]]
+
+| IC No. | Slave Address |
+|--------+---------------|
+| IC16   | 0x4C          |
+| IC17   | 0x4D          |
+| IC20   | 0x4E          |
+
 * FPGAシステム仕様
 Space Cubics OBCのFPGAは、 Space Cubics OBCの主要機能を司るプロセッサです。
 この章では Configuration後の FPGA機能について説明します。
