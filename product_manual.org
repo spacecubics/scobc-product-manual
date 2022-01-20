@@ -1,7 +1,7 @@
 #+TITLE: Space Cubics OBC製品マニュアル
 #+SUBTITLE:
 #+AUTHOR: Space Cubics
-#+DATE: December 25, 2021
+#+DATE: January 20, 2022
 #+EMAIL: daisuke@spacecubics.com
 #+OPTIONS: ^:{}
 #+OPTIONS: H:6
