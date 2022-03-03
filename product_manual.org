@@ -1,5 +1,5 @@
 #+TITLE: Space Cubics OBC製品マニュアル
-#+SUBTITLE:
+#+SUBTITLE: 対象型番: SC-OBC-A1
 #+AUTHOR: Space Cubics
 #+DATE: January 20, 2022
 #+EMAIL: daisuke@spacecubics.com
