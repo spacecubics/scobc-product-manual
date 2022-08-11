@@ -299,6 +299,53 @@ Platform cable USB IIは、OBC Moduleの以下のピンに接続してくださ�
 #+ATTR_HTML: :width 300
 [[file:./images/platform_cable_connect.png]]
 
+* OBCシステム仕様
+この章では、Space Cubics OBCのシステム仕様について説明します。
+
+Space Cubics OBCは、基板上に搭載されるメインプロセッサとなる FPGAと、システムを管理する TRCHが協調して動作します。
+ユーザーは、FPGAに実装されるシステムのプログラムだけでなく、TRCHのプログラムを変更する事で任意のシステムを構築する事もできます。
+
+** 電源投入時の動作
+OBCに電源が投入されると、最初にTRCHのみが起動します。
+TRCHは OBCの基板に搭載されているセンサーから電源の状態と温度を取得し、FPGAが動作可能な条件である場合 FPGAの電源を投入します。
+
+TRCHは FPGAの電源投入時に FPGAを Configurationさせるメモリを TRCH_CFG_MEM_SEL信号によって選択します。
+FPGAは電源投入後に、TRCHによって選択された Configurationメモリからデータを読み出し、Configurationを行います。
+
+#+CAPTION: System power-on timing
+#+ATTR_HTML: :width 550
+[[file:./images/power_on_timing.png]]
+
+** TRCHによる FPGAの死活監視
+TRCHは FPGAから出力される Watchdog信号 (FPGA_WATCHDOG)を監視する事によって FPGAの Configurationや ソフトウェアの動作に問題が起きた事を検知します。
+
+TRCHが FPGAに電源を投入すると、FPGAはただちに Configurationを開始します [A]。
+Configurationが完了すると、FPGAに実装されている System Monitorの Watchdog回路により、ソフトウェアの動作に関わらず TRCHに接続される FPGA_WATCHDOG信号のトグルを開始します [B]。
+TRCHは FPGA_WATCHDOG信号が定期的にトグルし続けている事を監視する事によって、OBCの FPGAシステムが健全に動作していると判断します [C]。
+
+FPGAに実装されている System Monitorは、ソフトウェアによる Software Watchdog Timerのキックが一定期間(レジスタの初期値は 128秒)行われない時、Software Watchdog Timerが満了したと判断し、FPGA_WATCHDOG信号のトグルを停止します [D]。
+
+#+CAPTION: TRCH-FPGA Watchdog System
+#+ATTR_HTML: :width 550
+[[file:./images/watchdog_system.png]]
+
+** システムのリブート
+TRCHは FPGAから出力される Watchdog信号と Power Cycle Request信号を監視し、必要に応じ FPGAのシステムに Power Cycleを行います。
+
+FPGAのシステムに何らかの問題が起こり、FPGAのソフトウェアによる Software Watchdog Timerが一定期間キックされない時、Software Watchdog Timerの満了後に、FPGA_WATCHDOG信号のトグル動作が停止します。
+TRCHは FPGA_WATCHDOG信号の停止を検出すると、FPGAの電源をOFFします [A}。
+
+TRCHは FPGAの電源を再度ONする前に、FPGAを Configurationさせるメモリを変更します [B]。
+この機能により、FPGAが再起動する時は別の Configurationメモリのデータで起動します。
+Configrationメモリの切り替え後、再度 FPGAの電源を投入する事により Power Cycleを完了します [C]。
+
+Configurationメモリの変更は、Watchdog機能による障害の検知時のみではなく、FPGAからの Power Cycle Request信号による再起動時も同様に起こります。
+On the Flyでの Configurationメモリの書き換え時は、次に起動する Configurationメモリの書き換えを行い、Power Cycle Requestを発行する事で、新しいデータに問題があり起動に失敗した場合、自動的に元の Configurationメモリのデータで復旧します。
+
+#+CAPTION: FPGA System Reboot
+#+ATTR_HTML: :width 550
+[[file:./images/system_reboot.png]]
+
 * ボードステータス回路
 OBC Moduleには、OBCのボードステータス(電源状態、温度状態)を監視する機能を搭載しています。
 
