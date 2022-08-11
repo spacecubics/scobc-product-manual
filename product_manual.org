@@ -382,49 +382,6 @@ OBC Moduleには、OBCの温度状態をモニタするため 3つの温度セ�
 | IC17   | 0x4D          |
 | IC20   | 0x4E          |
 
-* FPGAシステム仕様
-Space Cubics OBCのFPGAは、 Space Cubics OBCの主要機能を司るプロセッサです。
-この章では Configuration後の FPGA機能について説明します。
-
-#+CAPTION: Space Cubics OBC FPGA Block Diagram
-[[file:./images/FPGA_BlockDiagram.png]]
-
-Space Cubics OBCは ARM Cortex-M3を CPUに採用したシステムを構築します。
-
-** FPGAシステム構成概要
-システムは大きく 6つの機能に分割されます。
-
-- System Controller
-System Controllerは、FPGAのクロック, リセットを生成するためのモジュールです。
-このモジュールで生成されるクロック, リセットは、FPGA全体に供給されます。
-
-- CPU (ARM Cortex-M3)
-Space Cubics OBCの FPGA機能を司る CPUを構成するモジュールです。
-CPUはソフトコアで実装し、ARM Cortex-M3 Design Start FPGA-Xilinx editionを採用します。
-
-- Main Memory System
-Main Memory Systemは CPUが私用するメモリシステムである。
-CPUとの接続は AXIで行われ、本システムは CPU Local Busとして実装します。
-
-CPU Local Busは CPUモジュール内部の ARM Cortex-M3の Instruction code AHB, Data code AHBをまとめたバスとして構成されています。
-このバスは AXI Interconnectorなどで分岐せず、メモリを直接付加し構成する事で Instructionアクセスのレイテンシーを最小限に抑えるよう設計されています。
-
-- Main AXI Bus System
-Main AXI Bus Systemは、CubeSat向けの OBCシステムとして必須となる機能の中で、アクセススピードが比較的重視されるIPをまとまたシステムです。
-
-このバスには、コンピュータシステムとして必要なメモリコントロールIPや CubeSatのメインの通信バスとなる CANのコントローラIPなどが接続されています。
-
-- Low Performance AHB System
-Low Performance AHB Systemは、CubeSat向け OBCシステムとして必須となる機能の中、アクセス頻度の低いIPをまとめたシステムです。
-
-このシステムはバスに AHBを採用する事で、IPの回路規模を小さくする事ができます。
-このバスには、システムレジスタやI2Cコントローラなどが接続されます。
-
-- Mission Bus System
-Mission Bus SystemはCubeSatのミッションを行うためのIPを接続するシステムです。
-
-ユーザーのロジックをはじめとするミッションに関わるIPはこのバスに接続されます。
-
 * 形状図
 ** Space Cubics OBC基板形状図
 #+CAPTION: OBC基板形状 および 固定穴寸法
