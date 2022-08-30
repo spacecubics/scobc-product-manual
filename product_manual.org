@@ -186,8 +186,8 @@ IO Boardインターフェースは、OBC Moduleと IO Boardを接続するた�
 |       46 | UIO4_02      | Inout  | VDD_3V3_IO   | User IO4 Bit 2/CM3 TMS,SWDIO信号、FPGAの IO_L14N_T2_SRCC_13 (pin: Y21)に接続  |
 |       47 | UIO4_01      | Inout  | VDD_3V3_IO   | User IO4 Bit 1/CM3 TCK,SWCLK信号、FPGAの IO_L14P_T2_SRCC_13 (pin: W21)に接続  |
 |       48 | GND          | Power  | -            | 電源(GND)                                                                     |
-|       49 | ICPS_PGD     | Inout  | VDD_3V3_IO   | PIC PGD信号、PIC16LF877の RB7/PGDに接続                                       |
-|       50 | ICPS_PGC     | Inout  | VDD_3V3_IO   | PIC PGC信号、PIC16LF877の RB6/PGCに接続                                       |
+|       49 | ICSP_PGD     | Inout  | VDD_3V3_IO   | PIC PGD信号、PIC16LF877の RB7/PGDに接続                                       |
+|       50 | ICSP_PGC     | Inout  | VDD_3V3_IO   | PIC PGC信号、PIC16LF877の RB6/PGCに接続                                       |
 |       51 | ICSP_MCLR_B  | Inout  | VDD_3V3_IO   | PIC MCLR_B信号、PIC16LF877の MCLR/VPPに接続                                   |
 |       52 | GND          | Power  | -            | 電源(GND)                                                                     |
 |       53 | FPGA_TCK     | Output | VDD_3V3_IO   | FPGA JTAG TCK信号、FPGAの TCK_0 (pin: H12)に接続                              |
