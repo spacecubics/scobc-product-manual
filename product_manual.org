@@ -10,12 +10,12 @@
 Space Cubics OBCは、3U以上の CubeSatをターゲットとする On Board Computer(以下、OBC)です。
 
 Space Cubics OBCはメインプロセッサ用デバイスとして Xilinx製 Artix-7 FPGAを採用し、FPGAにインプリする ARM Cortex-M3を核としたシステムです。
-FPGAを採用する事で、インターフェースの種類や数を Cubesat毎に柔軟に対応する事ができます。
-また、ユーザーの専用IPを実装する事により、特殊な処理を CPUのリソースを使わずに行う事ができ、システムのパフォーマンス向上を見込む事も可能です。
+FPGAを採用する事で、インターフェースの種類や数を Cubesat毎に柔軟に変更する事ができます。
+また、ユーザーの専用IPを実装する事により、特殊な処理を CPUのリソースを使わずに行う事ができるため、システムのパフォーマンス向上が見込めます。
 
-Space Cubics OBCには、メインプロセッサとは別にシステム管理をおこなうためのサブマイコンとして PIC16LF877を搭載します。
+Space Cubics OBCには、メインプロセッサとは別にシステム管理をおこなうためのサブマイコンとして PIC16LF877を搭載しています。
 このサブマイコンは Timing, Reset, Config & Health Controller(以下、TRCH)と呼ばれ、FPGA起動前のシステムの管理や、FPGA起動後の異常検知を行います。
-Space Cubics OBCは、TRCHにより異常発生時の自動復帰する機能を実現します。
+Space Cubics OBCは、TRCHによって異常発生時に自動復帰する機能を実現しています。
 
 * 製品概要
 ** 仕様
@@ -64,11 +64,11 @@ Space Cubics OBCは、TRCHにより異常発生時の自動復帰する機能を
 ** Block Diagram
 Space Cubics OBCは、FPGAを採用することによる高い柔軟性を維持するために、OBC Moduleと IO Boardの 2枚の基板で構成されます。
 
-OBC Moduleは、Space Cubics OBCを採用するシステムのインターフェース構成が変わっても影響しない再利用性の高い機能が実装されています。
-一方、IO Boardにはインターフェースの電気的特性を満たすために必要は Transceiver ICや プロトコルコンバータ ICなど、システム構成に影響を受ける機能を実装します。
+OBC Moduleには、Space Cubics OBCを採用するシステムのインターフェース構成が変わっても影響しない再利用性の高い機能が実装されています。
+一方、IO Boardにはインターフェースの電気的特性を満たすために必要な Transceiver ICや プロトコルコンバータ ICなど、システム構成に影響を受ける機能を実装します。
 
 Space Cubics OBCを使うユーザーは、衛星のシステムが変更になっても IO Boardを再設計する事で、新しい衛星に適合させる事ができます。
-衛星のシステムが変わっても、同じ OBC Moduleを採用するシステムでは、多くのソフトウェア資産を流用する事ができます。
+衛星のシステムが異なっても、同じ OBC Moduleを採用するシステムでは多くのソフトウェア資産を流用する事ができます。
 
 OBC Moduleと IO Boardは 80ピンの Board to Boardコネクタで接続します。
 
@@ -81,7 +81,7 @@ OBC Moduleと IO Boardは 80ピンの Board to Boardコネクタで接続しま�
 | 項目                           | 記号               | 最小 |     最大 | 単位 | 条件等                                |
 |--------------------------------+--------------------+------+----------+------+---------------------------------------|
 | 電源電圧                       | VIN_A, VIN_B       | -0.3 |     10.0 | V    |                                       |
-| FPGA I/Oバング電源電圧         | VDD_UIO1, VDD_UIO2 | -0.5 |      3.6 | V    |                                       |
+| FPGA I/Oバンク電源電圧         | VDD_UIO1, VDD_UIO2 | -0.5 |      3.6 | V    |                                       |
 | 入力電圧(ULPI, CAN信号を除く)  | VI, VO             | -0.3 | OVDD+0.3 | V    | OVDD = VDD_3V3_IO, VDD_UIO1, VDD_UIO2 |
 | 入力電圧(ULPI_DP, ULPI_DM信号) | VI_ULPI            | -0.3 |     5.25 | V    |                                       |
 | 入出力電圧(CANH, CANL信号)     | VI_CAN             | -0.3 | OVDD+0.3 | V    | OVDD = VDD_3V3_IO                     |
@@ -242,7 +242,7 @@ User IO Group 1は FPGAの Bank 34、User IO Group 2は FPGAの Bank 35を専有
 | Group 1 | UIO1_(Number) | 16本   | Bank 34   | VDD_UIO1           |
 | Group 2 | UIO2_(Number) | 16本   | Bank 35   | VDD_UIO2           |
 
-User IO Groupは VDD_UIO1, VDD_UIO02に任意の IO電圧を印加し使用する事ができます。
+User IO Groupは VDD_UIO1, VDD_UIO02に任意の IO電圧を印加して使用する事ができます。
 FPGAで使用したいIOに合ったIO電圧を印加してください。
 
 FPGAの IO電源 (VCCO)は、FPGAの電源投入シーケンスに従い投入する必要があります。
@@ -317,7 +317,7 @@ Platform cable USB IIは、OBC Moduleの以下のピンに接続してくださ�
 [[file:./images/platform_cable_connect.png]]
 
 * OBCシステム仕様
-この章では、Space Cubics OBCのシステム仕様について説明します。
+Space Cubics OBCのシステム仕様について説明します。
 
 Space Cubics OBCは、基板上に搭載されるメインプロセッサとなる FPGAと、システムを管理する TRCHが協調して動作します。
 ユーザーは、FPGAに実装されるシステムのプログラムだけでなく、TRCHのプログラムを変更する事で任意のシステムを構築する事もできます。
