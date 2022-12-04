@@ -169,7 +169,7 @@ IO Boardインターフェースは、OBC Moduleと IO Boardを接続するた�
 | ピン番号 | ピン名       | I/O    | 電源ドメイン | 説明                                                                          |
 |----------+--------------+--------+--------------+-------------------------------------------------------------------------------|
 |       31 | TRCH_UART_RX | Input  | VDD_3V3_IO   | TRCH UART RX信号、PIC16LF877の RC7/RX/DTに接続                                |
-|       32 | TRCH_UART_EN | Output | VDD_3V3_IO   | TRCH UART Enable信号、PIC16LF877の RC2/CCP1に接続                             |
+|       32 | VDD_3V3_SYS  | Power  | -            | 電源(VDD_3V3_SYS)出力                                                         |
 |       33 | GND          | Power  | -            | 電源(GND)                                                                     |
 |       34 | I2C_EXT_SCL  | Output | VDD_3V3_IO   | I2C SCL信号、PIC16LF877の RD2/PSP2、FPGAの IO_L9P_T1_DQS_12 (pin: AE22)に接続 |
 |       35 | I2C_EXT_SDA  | Inout  | VDD_3V3_IO   | I2C SDA信号、PIC16LF877の RD3/PSP3、FPGAの IO_L9N_T1_DQS_12 (pin: AF22)に接続 |
