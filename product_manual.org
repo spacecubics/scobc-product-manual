@@ -50,6 +50,7 @@ Space Cubics OBCは、TRCHにより異常発生時の自動復帰する機能を
 |                                                   | - Supports bit rates 12 Mbps (USB Full-Speed)                                               |
 | I2C Interface                                     | Accessible from FPGA and TRCH x 1                                                           |
 | Serial Interface                                  | TRCH UART Interface x 1                                                                     |
+|                                                   | (ハードウェアオプションによって FPGAへの接続に変更可能)                                     |
 | FPGA User IO                                      | User IO Group 1 x 16 pin (IO電圧可変)                                                       |
 |                                                   | User IO Group 2 x 16 pin (IO電圧可変)                                                       |
 |                                                   | User IO Group 4 x 6 pin, Cortex-M3 JTAG兼用 (3.3V固定)                                      |
