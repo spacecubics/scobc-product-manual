@@ -46,7 +46,6 @@ Space Cubics OBCは、TRCHにより異常発生時の自動復帰する機能を
 | NOR Flash for Data Memory                         | 32 MByte/Redundancy (S25FL256L)                                                             |
 | FeRAM                                             | 512 kByte x 2 (CY15B104QSN)                                                                 |
 | Control Area Network (CAN)                        | Conforms to the ISO 11898-1, CAN2.0A, and CAN2.0B standards Supports bit rates up to 1 Mb/s |
-|                                                   | - Only 3.3V CAN                                                                             |
 | Space Communication Bus (SCBus)                   | Compliant with the USB-based communication interface proposed by Space Cubics (T.B.D.)      |
 |                                                   | - Supports bit rates 12 Mbps (USB Full-Speed)                                               |
 | I2C Interface                                     | Accessible from FPGA and TRCH x 1                                                           |
