@@ -34,7 +34,7 @@ Space Cubics OBCは、TRCHにより異常発生時の自動復帰する機能を
 | メインCPU                                         | ARM Cortex-M3 Design Start FPGA Xilinx Edition r0p1                                         |
 |                                                   | - CPU Revision r2p1                                                                         |
 |                                                   | - ARMv7-M architecture profile                                                              |
-|                                                   | - Maximum operation frequency up to 96 MHz (T.B.D.)                                                  |
+|                                                   | - Maximum operation frequency up to 48 MHz (T.B.D.)                                         |
 | TRCH                                              | PIC16LF877 8 bit RISC CPU                                                                   |
 |                                                   | - operation frequency 4 MHz                                                                 |
 | FPGA源発振クロック                                | 24 MHz                                                                                      |
