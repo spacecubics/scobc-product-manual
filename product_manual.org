@@ -38,10 +38,10 @@ Space Cubics OBCは、TRCHにより異常発生時の自動復帰する機能を
 | TRCH                                              | PIC16LF877 8 bit RISC CPU                                                                   |
 |                                                   | - operation frequency 4 MHz                                                                 |
 | FPGA源発振クロック                                | 24 MHz                                                                                      |
-| On Chip SRAM                                      | 64 kByte of FPGA BlockRAM                                                                   |
+| On Chip SRAM                                      | 32 kByte of FPGA BlockRAM                                                                   |
+| On Borad SRAM                                     | 4 MByte Asynchronouse Static RAM (CY7C1061GE)                                               |
 |                                                   | - ECC Memory Protection                                                                     |
 |                                                   | - Memory Scrubbing                                                                          |
-| On Borad SRAM                                     | 4 MByte Asynchronouse Static RAM (CY7C1061GE)                                               |
 | NOR Flash for Configuration and Code Flash Memory | 32 MByte/Redundancy (S25FL256L)                                                             |
 | NOR Flash for Data Memory                         | 32 MByte/Redundancy (S25FL256L)                                                             |
 | FeRAM                                             | 512 kByte x 2 (CY15B104QSN)                                                                 |
