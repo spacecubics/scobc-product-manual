@@ -193,12 +193,12 @@ IO Boardインターフェースは、OBC Moduleと IO Boardを接続するた�
 |       48 | GND          | Power  | -            | 電源(GND)                                                                                                                              |
 |       49 | ICSP_PGD     | Inout  | VDD_3V3_SYS  | PIC PGD信号、PIC16LF877の RB7/PGDに接続                                                                                                |
 |       50 | ICSP_PGC     | Inout  | VDD_3V3_SYS  | PIC PGC信号、PIC16LF877の RB6/PGCに接続                                                                                                |
-|       51 | ICSP_MCLR_B  | Inout  | VDD_3V3_SYS  | PIC MCLR_B信号、PIC16LF877の MCLR/VPPに接続                                                                                            |
+|       51 | ICSP_MCLR_B  | Input  | VDD_3V3_SYS  | PIC MCLR_B信号、PIC16LF877の MCLR/VPPに接続                                                                                            |
 |       52 | GND          | Power  | -            | 電源(GND)                                                                                                                              |
-|       53 | FPGA_TCK     | Output | VDD_3V3_IO   | FPGA JTAG TCK信号、FPGAの TCK_0 (pin: H12)に接続                                                                                       |
+|       53 | FPGA_TCK     | Input  | VDD_3V3_IO   | FPGA JTAG TCK信号、FPGAの TCK_0 (pin: H12)に接続                                                                                       |
 |       54 | FPGA_TDO     | Output | VDD_3V3_IO   | FPGA JTAG TDO信号、FPGAの TDO_0 (pin: J10)に接続                                                                                       |
 |       55 | FPGA_TDI     | Input  | VDD_3V3_IO   | FPGA JTAG TDI信号、FPGAの TDI_0 (pin: H10)に接続                                                                                       |
-|       56 | FPGA_TMS     | Output | VDD_3V3_IO   | FPGA JTAG TMS信号、FPGAの TMS_0 (pin: H11)に接続                                                                                       |
+|       56 | FPGA_TMS     | Input  | VDD_3V3_IO   | FPGA JTAG TMS信号、FPGAの TMS_0 (pin: H11)に接続                                                                                       |
 |       57 | GND          | Power  | -            | 電源(GND)                                                                                                                              |
 |       58 | UIO2_15      | Inout  | VDD_UIO2     | User IO2 Bit 15信号、FPGAの IO_L16N_T2_35 (pin: A4)に接続                                                                              |
 |       59 | UIO2_14      | Inout  | VDD_UIO2     | User IO2 Bit 14信号、FPGAの IO_L16P_T2_35 (pin: B4)に接続                                                                              |
