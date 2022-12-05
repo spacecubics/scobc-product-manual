@@ -353,7 +353,7 @@ FPGAに実装されている System Monitorは、ソフトウェアによる Sof
 TRCHは FPGAから出力される Watchdog信号と Power Cycle Request信号を監視し、必要に応じ FPGAのシステムに Power Cycleを行います。
 
 FPGAのシステムに何らかの問題が起こり、FPGAのソフトウェアによる Software Watchdog Timerが一定期間キックされない時、Software Watchdog Timerの満了後に、FPGA_WATCHDOG信号のトグル動作が停止します。
-TRCHは FPGA_WATCHDOG信号の停止を検出すると、FPGAの電源をOFFします [A}。
+TRCHは FPGA_WATCHDOG信号の停止を検出すると、FPGAの電源をOFFします [A]。
 
 TRCHは FPGAの電源を再度ONする前に、FPGAを Configurationさせるメモリを変更します [B]。
 この機能により、FPGAが再起動する時は別の Configurationメモリのデータで起動します。
