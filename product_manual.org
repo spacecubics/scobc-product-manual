@@ -20,46 +20,46 @@ Space Cubics OBCは、TRCHによって異常発生時に自動復帰する機能
 * 製品概要
 ** 仕様
 
-| Feature                                           | Description                                                                                 |
-|---------------------------------------------------+---------------------------------------------------------------------------------------------|
-| メインデバイス                                    | Xilinx Artix-7 (XC7A200T-1FBG676I)                                                          |
-|                                                   | - Logic Cell 215,360                                                                        |
-|                                                   | - CLB スライス数(4 LUT, 8 F/F) 33,650                                                       |
-|                                                   | - CLB 最大分散RAM 2,888 Kb                                                                  |
-|                                                   | - DSP48E1スライス 740                                                                       |
-|                                                   | - BlockRAM 36 Kb x 365 (18 Kb x 730)                                                        |
-|                                                   | - CMT 10                                                                                    |
-|                                                   | - XADC 1 (for FPGA die temperature measurement)                                             |
-|                                                   | - I/O Bank 10                                                                               |
-| メインCPU                                         | ARM Cortex-M3 Design Start FPGA Xilinx Edition r0p1                                         |
-|                                                   | - CPU Revision r2p1                                                                         |
-|                                                   | - ARMv7-M architecture profile                                                              |
-|                                                   | - Maximum operation frequency up to 48 MHz (T.B.D.)                                         |
-| TRCH                                              | PIC16LF877 8 bit RISC CPU                                                                   |
-|                                                   | - operation frequency 4 MHz                                                                 |
-| FPGA源発振クロック                                | 24 MHz                                                                                      |
-| On Chip SRAM                                      | 32 kByte of FPGA BlockRAM                                                                   |
-| On Borad SRAM                                     | 4 MByte Asynchronouse Static RAM (CY7C1061GE)                                               |
-|                                                   | - ECC Memory Protection                                                                     |
-|                                                   | - Memory Scrubbing                                                                          |
-| NOR Flash for Configuration and Code Flash Memory | 32 MByte/Redundancy (S25FL256L)                                                             |
-| NOR Flash for Data Memory                         | 32 MByte/Redundancy (S25FL256L)                                                             |
-| FeRAM                                             | 512 kByte x 2 (CY15B104QSN)                                                                 |
-| Control Area Network (CAN)                        | Conforms to the ISO 11898-1, CAN2.0A, and CAN2.0B standards Supports bit rates up to 1 Mb/s |
-| Space Communication Bus (SCBus)                   | Compliant with the USB-based communication interface proposed by Space Cubics (T.B.D.)      |
-|                                                   | - Supports bit rates 12 Mbps (USB Full-Speed)                                               |
-| I2C Interface                                     | Accessible from FPGA and TRCH x 1                                                           |
-| Serial Interface                                  | TRCH UART Interface x 1                                                                     |
-|                                                   | (ハードウェアオプションによって FPGAへの接続に変更可能)                                     |
-| FPGA User IO                                      | User IO Group 1 x 16 pin (IO電圧可変)                                                       |
-|                                                   | User IO Group 2 x 16 pin (IO電圧可変)                                                       |
-|                                                   | User IO Group 4 x 6 pin, Cortex-M3 JTAG兼用 (3.3V固定)                                      |
-| TRCH User IO                                      | User IO Group 3 x 3 pin (3.3V固定)                                                          |
-|                                                   | (ハードウェアオプションによって FPGAへの接続に変更可能)                                     |
-| 電源電圧                                          | DC 5.0V ± 10%                                                                              |
-| 消費電力                                          | 2.0 W (Max)                                                                                 |
-| 使用温度範囲                                      | -40 〜 80 ℃                                                                                |
-| 外形サイズ                                        | 70 mm x 70 mm                                                                               |
+| Feature                         | Description                                                                                 |
+|---------------------------------+---------------------------------------------------------------------------------------------|
+| メインデバイス                  | Xilinx Artix-7 (XC7A200T-1FBG676I)                                                          |
+|                                 | - Logic Cell 215,360                                                                        |
+|                                 | - CLB スライス数(4 LUT, 8 F/F) 33,650                                                       |
+|                                 | - CLB 最大分散RAM 2,888 Kb                                                                  |
+|                                 | - DSP48E1スライス 740                                                                       |
+|                                 | - BlockRAM 36 Kb x 365 (18 Kb x 730)                                                        |
+|                                 | - CMT 10                                                                                    |
+|                                 | - XADC 1 (for FPGA die temperature measurement)                                             |
+|                                 | - I/O Bank 10                                                                               |
+| メインCPU                       | ARM Cortex-M3 Design Start FPGA Xilinx Edition r0p1                                         |
+|                                 | - CPU Revision r2p1                                                                         |
+|                                 | - ARMv7-M architecture profile                                                              |
+|                                 | - Maximum operation frequency up to 48 MHz (T.B.D.)                                         |
+| TRCH                            | PIC16LF877 8 bit RISC CPU                                                                   |
+|                                 | - operation frequency 4 MHz                                                                 |
+| FPGA源発振クロック              | 24 MHz                                                                                      |
+| On Chip SRAM                    | 32 kByte of FPGA BlockRAM                                                                   |
+| On Borad SRAM                   | 4 MByte Asynchronouse Static RAM (CY7C1061GE)                                               |
+|                                 | - ECC Memory Protection                                                                     |
+|                                 | - Memory Scrubbing                                                                          |
+| Configuration Flash Memory      | 32 MByte/Redundancy (NOR Flash: S25FL256L)                                                  |
+| Data Store Flash Memory         | 32 MByte/Redundancy (NOR Flash: S25FL256L)                                                  |
+| FeRAM                           | 512 kByte x 2 (CY15B104QSN)                                                                 |
+| Control Area Network (CAN)      | Conforms to the ISO 11898-1, CAN2.0A, and CAN2.0B standards Supports bit rates up to 1 Mb/s |
+| Space Communication Bus (SCBus) | Compliant with the USB-based communication interface proposed by Space Cubics (T.B.D.)      |
+|                                 | - Supports bit rates 12 Mbps (USB Full-Speed)                                               |
+| I2C Interface                   | Accessible from FPGA and TRCH x 1                                                           |
+| Serial Interface                | TRCH UART Interface x 1                                                                     |
+|                                 | (ハードウェアオプションによって FPGAへの接続に変更可能)                                     |
+| FPGA User IO                    | User IO Group 1 x 16 pin (IO電圧可変)                                                       |
+|                                 | User IO Group 2 x 16 pin (IO電圧可変)                                                       |
+|                                 | User IO Group 4 x 6 pin, Cortex-M3 JTAG兼用 (3.3V固定)                                      |
+| TRCH User IO                    | User IO Group 3 x 3 pin (3.3V固定)                                                          |
+|                                 | (ハードウェアオプションによって FPGAへの接続に変更可能)                                     |
+| 電源電圧                        | DC 5.0V ± 10%                                                                              |
+| 消費電力                        | 2.0 W (Max)                                                                                 |
+| 使用温度範囲                    | -40 〜 80 ℃                                                                                |
+| 外形サイズ                      | 70 mm x 70 mm                                                                               |
 
 ** Block Diagram
 Space Cubics OBCは、FPGAを採用することによる高い柔軟性を維持するために、OBC Moduleと IO Boardの 2枚の基板で構成されます。
