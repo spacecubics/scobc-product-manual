@@ -405,4 +405,4 @@ OBC Moduleには、OBCの温度状態をモニタするため 3つの温度セ�
 * 形状図
 ** Space Cubics OBC基板形状図
 #+CAPTION: OBC基板形状 および 固定穴寸法
-[[file:./images/sc-obc-layout.png]]
+[[file:./images/sc-obc-layout.svg]]
