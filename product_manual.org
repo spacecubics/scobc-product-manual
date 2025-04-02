@@ -275,14 +275,18 @@ User IO Group 3 及び WDOG_OUT信号は、ハードウェアオプションに�
 
 接続先が TRCHと FPGAで変わる事で、信号の電源ドメインも変わるため、IO Boardを設計する際は注意してください。
 
-| User IO      | TRCH選択時の接続先    | TRCH選択時の電源ドメイン | FPGA選択時の接続先             | FPGA選択時の電源ドメイン |
-|--------------+-----------------------+--------------------------+--------------------------------+--------------------------|
-| UIO3_00      | PIC16LF877 RD4/PSP4   | VDD_3V3_SYS              | FPGA IO_L23P_T3_12 (pin: Y15)  | VDD_3V3_IO               |
-| UIO3_01      | PIC16LF877 RD5/PSP5   | VDD_3V3_SYS              | FPGA IO_L23N_T3_12 (pin: AA15) | VDD_3V3_IO               |
-| UIO3_02      | PIC16LF877 RD6/PSP6   | VDD_3V3_SYS              | FPGA IO_L24P_T3_12 (pin: W14)  | VDD_3V3_IO               |
-| TRCH_UART_TX | PIC16LF877 RC6/TX/CK  | VDD_3V3_SYS              | FPGA IO_L24N_T3_12 (pin: W15)  | VDD_3V3_IO               |
-| TRCH_UART_RX | PIC16LF877 RC7/RX/DT  | VDD_3V3_SYS              | FPGA IO_L1N_T0_12 (pin: AE26)  | VDD_3V3_IO               |
-| WDOG_OUT     | PIC16LF877 RE0/AN5/RD | VDD_3V3_SYS              | FPGA IO_L16N_T2_12 (pin: AF18) | VDD_3V3_IO               |
+| User IO      | TRCH選択時の接続先    | FPGA選択時の接続先             |
+|--------------+-----------------------+--------------------------------|
+| UIO3_00      | PIC16LF877 RD4/PSP4   | FPGA IO_L23P_T3_12 (pin: Y15)  |
+| UIO3_01      | PIC16LF877 RD5/PSP5   | FPGA IO_L23N_T3_12 (pin: AA15) |
+| UIO3_02      | PIC16LF877 RD6/PSP6   | FPGA IO_L24P_T3_12 (pin: W14)  |
+| TRCH_UART_TX | PIC16LF877 RC6/TX/CK  | FPGA IO_L24N_T3_12 (pin: W15)  |
+| TRCH_UART_RX | PIC16LF877 RC7/RX/DT  | FPGA IO_L1N_T0_12 (pin: AE26)  |
+| WDOG_OUT     | PIC16LF877 RE0/AN5/RD | FPGA IO_L16N_T2_12 (pin: AF18) |
+
+- 電源ドメイン
+  - TRCH選択時: =VDD_3V3_SYS=
+  - FPGA選択時: =VDD_3V3_IO=
 
 *** デバッガ接続
 **** MPLAB PICkit4
