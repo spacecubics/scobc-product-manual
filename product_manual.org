@@ -118,10 +118,14 @@ OBC Moduleと IO Boardは 80ピンの Board to Boardコネクタで接続しま�
 
 ** 電源回路の構成
 OBC Moduleの電源回路の構成は次のとおりです。
-電源入力 VIN_A (CON1 1, 2, 3)と VIN_B (CON1 78, 79, 80)は冗長化されており、別々の回路で内部電源を生成します。
-入力された電圧を電源ICで各電圧に変換し、内部回路及び 外部出力端子に供給しています。
+電源入力 VIN_A (CON1 1, 2, 3)と VIN_B (CON1 78, 79, 80)は冗長化されており、別々の回路で VDD_3V3_SYS_A および VDD_3V3_SYS_Bを生成します。これらふたつの電源は、 理想ダイオードにより VDD_3V3_SYS に統合され、 TRCH などに供給されます。また、同じ VDD_3V3_SYS が IO Board インターフェース (CON1 32) を経由して外部に供給されます。VDD_3V3_SYS は内部回路と共有で使われるため、最大 100 mA 以下で使用してください。
 
-生成された電源出力ノードには Current and Voltage Monitorが付加されており、TRCHおよびFPGAから電源の状態を監視する事ができます。
+FPGA_PWR_EN によって、 各電源 IC が Enable され、 内部回路及び外部出力端子に必要な電源を供給します。
+
+生成された電源出力ノードには Current and Voltage Monitorが付加されており、TRCHおよびFPGAから電源の状態を監視する事ができます (M1-1, M1-2, M1-3, M2-1, M2-2, M2-3)。
+
+VDD_3V3_IOは IO Board インターフェース (CON1 37, 38) を経由して外部に供給されます。 VDD_3V3_IOには 300 mA の Over Current Protection が付加されています。
+
 
 #+CAPTION: 電源回路の構成
 #+ATTR_HTML: :width 600
