@@ -334,7 +334,8 @@ Space Cubics OBCは、基板上に搭載されるメインプロセッサとな�
 
 ** 電源投入時の動作
 OBCに電源が投入されると、最初にTRCHのみが起動します。
-TRCHは OBCの基板に搭載されているセンサーから電源の状態と温度を取得し、FPGAが動作可能な条件である場合 FPGAの電源を投入します。
+
+TRCHは OBCの基板に搭載されているセンサーから電源の状態と温度を取得し、FPGAが動作可能な条件である場合 FPGA_PWR_EN を HIGH にして、FPGAの電源を投入します。
 
 TRCHは FPGAの電源投入時に FPGAを Configurationさせるメモリを TRCH_CFG_MEM_SEL信号によって選択します。
 FPGAは電源投入後に、TRCHによって選択された Configurationメモリからデータを読み出し、Configurationを行います。
