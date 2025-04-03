@@ -168,22 +168,22 @@ IO Boardインターフェースは、OBC Moduleと IO Boardを接続するた�
 |       22 | UIO1_14      | Inout  | VDD_UIO1     | User IO1 Bit 14信号、FPGAの IO_L1P_T0_34 (pin: K3)に接続                                                                               |
 |       23 | UIO1_15      | Inout  | VDD_UIO1     | User IO1 Bit 15信号、FPGAの IO_L1N_T0_34 (pin: J3)に接続                                                                               |
 |       24 | GND          | Power  | -            | 電源(GND)                                                                                                                              |
-|       25 | UIO3_00      | Inout  | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | User IO3 Bit 0信号、PIC16LF877の RD4/PSP4に接続。ハードウェアオプションで FPGAの IO_L23P_T3_12 (pin: Y15)に接続を変更する事が可能です  |
-|       26 | UIO3_01      | Inout  | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | User IO3 Bit 1信号、PIC16LF877の RD5/PSP5に接続。ハードウェアオプションで FPGAの IO_L23N_T3_12 (pin: AA15)に接続を変更する事が可能です |
-|       27 | UIO3_02      | Inout  | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | User IO3 Bit 2信号、PIC16LF877の RD6/PSP6に接続。ハードウェアオプションで FPGAの IO_L24P_T3_12 (pin: W14)に接続を変更する事が可能です  |
+|       25 | UIO3_00      | Inout  | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | User IO3 Bit 0信号、PIC16LF877の RD4/PSP4に接続。ハードウェアオプションで FPGAの IO_L23P_T3_12 (pin: Y15)に接続を変更する事が可能  |
+|       26 | UIO3_01      | Inout  | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | User IO3 Bit 1信号、PIC16LF877の RD5/PSP5に接続。ハードウェアオプションで FPGAの IO_L23N_T3_12 (pin: AA15)に接続を変更する事が可能 |
+|       27 | UIO3_02      | Inout  | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | User IO3 Bit 2信号、PIC16LF877の RD6/PSP6に接続。ハードウェアオプションで FPGAの IO_L24P_T3_12 (pin: W14)に接続を変更する事が可能  |
 |       28 | UIO4_00      | Input  | VDD_3V3_IO   | User IO4 Bit 0信号、FPGAの IO_L22P_T3_12 (pin: AB16)に接続                                                                             |
 |       29 | GND          | Power  | -            | 電源(GND)                                                                                                                              |
-|       30 | TRCH_UART_TX | Output | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | TRCH UART TX信号、PIC16LF877の RC6/TX/CKに接続。ハードウェアオプションで FPGAの IO_L24N_T3_12 (pin: W15)に接続を変更する事が可能です   |
+|       30 | TRCH_UART_TX | Output | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | TRCH UART TX信号、PIC16LF877の RC6/TX/CKに接続。ハードウェアオプションで FPGAの IO_L24N_T3_12 (pin: W15)に接続を変更する事が可能   |
 
 #+CAPTION: CON1信号配列 (2/3)
 | ピン番号 | ピン名       | I/O    | 電源ドメイン | 説明                                                                                                                                   |
 |----------+--------------+--------+--------------+----------------------------------------------------------------------------------------------------------------------------------------|
-|       31 | TRCH_UART_RX | Input  | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | TRCH UART RX信号、PIC16LF877の RC7/RX/DTに接続。ハードウェアオプションで FPGAの IO_L1N_T0_12 (pin: AE26)に接続を変更する事が可能です   |
+|       31 | TRCH_UART_RX | Input  | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | TRCH UART RX信号、PIC16LF877の RC7/RX/DTに接続。ハードウェアオプションで FPGAの IO_L1N_T0_12 (pin: AE26)に接続を変更する事が可能   |
 |       32 | VDD_3V3_SYS  | Power  | -            | 電源(VDD_3V3_SYS)出力                                                                                                                  |
 |       33 | GND          | Power  | -            | 電源(GND)                                                                                                                              |
 |       34 | I2C_EXT_SCL  | Output | VDD_3V3_SYS  | I2C SCL信号、PIC16LF877の RD2/PSP2、FPGAの IO_L9P_T1_DQS_12 (pin: AE22)に接続。4.7 kΩ でプルアップされている                           |
 |       35 | I2C_EXT_SDA  | Inout  | VDD_3V3_SYS  | I2C SDA信号、PIC16LF877の RD3/PSP3、FPGAの IO_L9N_T1_DQS_12 (pin: AF22)に接続。4.7 kΩ でプルアップされている                           |
-|       36 | WDOG_OUT     | Output | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | Watchdog出力信号、PIC16LF877の RE0/AN5/RDに接続。ハードウェアオプションで FPGAの IO_L16N_T2_12 (pin: AF18)に接続を変更する事が可能です |
+|       36 | WDOG_OUT     | Output | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | Watchdog出力信号、PIC16LF877の RE0/AN5/RDに接続。ハードウェアオプションで FPGAの IO_L16N_T2_12 (pin: AF18)に接続を変更する事が可能 |
 |       37 | VDD_3V3_IO   | Power  | -            | 電源(VDD_3V3_IO)出力                                                                                                                   |
 |       38 | VDD_3V3_IO   | Power  | -            | 電源(VDD_3V3_IO)出力                                                                                                                   |
 |       39 | VDD_UIO1     | Power  | -            | 電源(VDD_UIO1)                                                                                                                         |
