@@ -181,8 +181,8 @@ IO Boardインターフェースは、OBC Moduleと IO Boardを接続するた�
 |       31 | TRCH_UART_RX | Input  | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | TRCH UART RX信号、PIC16LF877の RC7/RX/DTに接続。ハードウェアオプションで FPGAの IO_L1N_T0_12 (pin: AE26)に接続を変更する事が可能です   |
 |       32 | VDD_3V3_SYS  | Power  | -            | 電源(VDD_3V3_SYS)出力                                                                                                                  |
 |       33 | GND          | Power  | -            | 電源(GND)                                                                                                                              |
-|       34 | I2C_EXT_SCL  | Output | VDD_3V3_SYS  | I2C SCL信号、PIC16LF877の RD2/PSP2、FPGAの IO_L9P_T1_DQS_12 (pin: AE22)に接続                                                          |
-|       35 | I2C_EXT_SDA  | Inout  | VDD_3V3_SYS  | I2C SDA信号、PIC16LF877の RD3/PSP3、FPGAの IO_L9N_T1_DQS_12 (pin: AF22)に接続                                                          |
+|       34 | I2C_EXT_SCL  | Output | VDD_3V3_SYS  | I2C SCL信号、PIC16LF877の RD2/PSP2、FPGAの IO_L9P_T1_DQS_12 (pin: AE22)に接続。4.7 kΩ でプルアップされている                           |
+|       35 | I2C_EXT_SDA  | Inout  | VDD_3V3_SYS  | I2C SDA信号、PIC16LF877の RD3/PSP3、FPGAの IO_L9N_T1_DQS_12 (pin: AF22)に接続。4.7 kΩ でプルアップされている                           |
 |       36 | WDOG_OUT     | Output | VDD_3V3_SYS / VDD_3V3_IO[fn:hwopt] | Watchdog出力信号、PIC16LF877の RE0/AN5/RDに接続。ハードウェアオプションで FPGAの IO_L16N_T2_12 (pin: AF18)に接続を変更する事が可能です |
 |       37 | VDD_3V3_IO   | Power  | -            | 電源(VDD_3V3_IO)出力                                                                                                                   |
 |       38 | VDD_3V3_IO   | Power  | -            | 電源(VDD_3V3_IO)出力                                                                                                                   |
