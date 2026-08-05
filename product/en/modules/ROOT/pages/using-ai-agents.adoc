@@ -1,0 +1,26 @@
+= Using This Manual With an AI Agent
+
+This manual is written to be used directly by AI coding agents (Claude Code, Codex, Cursor,
+GitHub Copilot, and similar tools), not only read by humans. Whether you are laying out a carrier board around
+the SC-OBC Module A1, developing FPGA logic for your CubeSat, or writing Zephyr RTOS
+software, you can clone the manual's source repository and point your agent at it instead
+of searching the rendered site by hand.
+
+[source, console]
+----
+git clone https://github.com/spacecubics/sc-docs-a1
+----
+
+The repository includes an `AGENTS.md` file that tells the agent how the manual is
+organized and where to look for hardware specs, interface tables, or software examples.
+You do not need to tell the agent which section is relevant. Just ask your question, for
+example:
+
+* "What is the maximum voltage on connector J3?"
+* "What does the TRCH do before the FPGA starts, versus after?"
+* "How do I add a GPIO driver under Zephyr?"
+
+and the agent will find the right page on its own.
+
+For a browsable version of the same content, see the published manual at
+https://docs.spacecubics.com/[docs.spacecubics.com].
