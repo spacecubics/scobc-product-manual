@@ -2,7 +2,15 @@
 
 
 The Space Cubics OBC is an on-board computer designed for CubeSats of
-3U size and larger. The Space Cubics OBC Product Manual is the
-hardware manual provided to users.
+3U size and larger. This manual covers the product hardware, development
+board, software, and FPGA.
 
 Document Number: SC-ESP-00050
+
+The manual is organized as two Antora components:
+
+* `en/` contains the English manual.
+* `ja/` contains the Japanese manual.
+
+Each component contains the `ROOT`, `dev-board`, `software`, and `fpga`
+modules.

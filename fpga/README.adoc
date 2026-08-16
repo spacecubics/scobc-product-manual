@@ -1,7 +1,0 @@
-= Space Cubics OBC (SC-OBC-A1) Technical Reference Manual =
-
-「SC-OBC-A1 FPGA Technical Reference Manual」は、Space Cubics OBCに搭載するFPGAの仕様を説明するドキュメントです。
-
-SC-OBC-A1 FPGAの開発や、ソフトウェアの開発に必要な、FPGA機能に関する仕様やレジスタの仕様が記載されています。
-
-https://docs.spacecubics.com/[https://docs.spacecubics.com/] で読む事ができます。
