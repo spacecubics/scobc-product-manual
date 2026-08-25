@@ -1,7 +1,7 @@
 = Blinky sample
 The first sample is *Blinky*. This application blinks an LED on your Development Board.
 
-CAUTION: For the *Blinky* sample, make sure that SW1[10] (LED control) is turned ON.
+CAUTION: For the *Blinky* sample, make sure that bit10 (LED control) of DIP Switch (_SW1_) is turned ON.
 If it is OFF, the LED will not blink.
 
 == Build
