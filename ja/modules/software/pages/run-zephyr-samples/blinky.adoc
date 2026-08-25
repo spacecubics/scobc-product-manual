@@ -2,7 +2,7 @@
 
 最初のサンプルは *Blinky* です。このアプリケーションは Development Board 上の LED を点滅させます。
 
-CAUTION: *Blinky* サンプルでは、SW1[10] (LED control) が ON になっていることを確認してください。
+CAUTION: *Blinky* サンプルでは、DIP スイッチ (_SW1_) の bit10 (LED control) が ON になっていることを確認してください。
 OFF になっている場合、LED は点滅しません。
 
 == ビルド
