@@ -196,6 +196,8 @@ For example, writing 65 KB takes about 1 minute on WSL and about 20 seconds on n
 
 == Check the DIP Switch status
 
+NOTE: To flash with `west flash`, bit5 and bit6 of DIP Switch (_SW1_) must be turned ON.
+
 NOTE: To use the Zephyr console, bit3 (RX) and bit4 (TX) of DIP Switch (_SW1_) must be turned ON.
 
 == Power ON the SC-OBC Module A1 Development Board

@@ -19,6 +19,8 @@ These steps match the *Build the Blinky Sample* section in the Zephyr documentat
 
 == Flash
 
+NOTE: To flash with `west flash`, bit5 and bit6 of DIP Switch (_SW1_) must be turned ON.
+
 Next, we'll flash the SC-OBC Module A1:
 
 [source, console]
