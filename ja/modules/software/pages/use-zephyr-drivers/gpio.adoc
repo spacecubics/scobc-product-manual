@@ -240,7 +240,7 @@ SC-OBC Module A1 と PC の間をケーブルで接続し、端末でコンソ�
 tio /dev/ttyUSB2
 ----
 
-NOTE: Zephyr コンソールを使用するには、DIP スイッチ (_SW1_) の bit3 (RX) と bit4 (TX) を ON にする必要があります。現在 OFF の場合は、ON に切り替えてください。
+NOTE: Zephyr コンソールを使用するには、DIP スイッチ (_SW1_) の bit3 (RX) と bit4 (TX) を ON にする必要があります。
 
 == ビルド
 
