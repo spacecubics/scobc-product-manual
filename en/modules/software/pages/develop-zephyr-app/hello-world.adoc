@@ -92,6 +92,8 @@ west build -p always -b scobc_a1 --shield scobc_a1_dev scobc-a1-sample/samples/h
 
 == Flash
 
+NOTE: To flash with `west flash`, bit5 and bit6 of DIP Switch (_SW1_) must be turned ON.
+
 Next, we'll flash the SC-OBC Module A1:
 
 [source, console]

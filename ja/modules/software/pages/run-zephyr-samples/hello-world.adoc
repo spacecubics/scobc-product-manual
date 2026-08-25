@@ -26,6 +26,9 @@ west build -p always -b scobc_a1 --shield scobc_a1_dev zephyr/samples/hello_worl
 
 == 書き込み
 
+NOTE: `west flash` で書き込むには、DIP スイッチ (_SW1_) の
+bit5 と bit6 を ON にする必要があります。
+
 次に、SC-OBC Module A1 に書き込みます。
 
 [source, console]
