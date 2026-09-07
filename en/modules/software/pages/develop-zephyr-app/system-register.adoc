@@ -1,0 +1,327 @@
+= System Register sample
+
+include::partial$link-attributes.adoc[]
+
+This section explains how to build and run the *System Register* sample in the T2 topology-based repository.
+
+== What is System Register?
+
+System Register consists of registers that control the SC-OBC Module A1 FPGA system.
+See https://docs.spacecubics.com/scobc-a1/latest/fpga/system_register.html[System Register] (Currently available in Japanese only) for register and bit-field details.
+Its main features are:
+
+Memory selection and boot status::
+Select CPU code memory (ITCM / HRMEM) and Configuration Flash Memory, identify the boot bank, and read boot status including fallback.
+
+Clock and power control::
+Configure the system clock, read PLL information, control sleep-mode power consumption, and request a power cycle from TRCH.
+
+Scratchpad and FPGA information::
+Access software scratchpad registers, the System Register IP version, FPGA build information, and Device DNA.
+
+This sample uses the Zephyr driver to check and select Configuration Memory banks and request a power cycle.
+
+=== System Register driver
+
+The FPGA System Register driver currently provides the following APIs.
+
+[[system-register-api]]
+.System Register Driver API List
+[options="header"]
+|===
+|API |Description |Return value
+
+|sc_get_fpga_ip_ver()
+|Gets the FPGA IP version.
+|FPGA IP version
+
+|sc_get_fpga_build_hash()
+|Gets the FPGA build hash.
+|FPGA build hash
+
+|sc_get_fpga_dna_1() / sc_get_fpga_dna_2()
+|Gets the two 32-bit FPGA DNA values.
+|FPGA DNA value
+
+|sc_get_boot_cfgmem()
+|Gets the Configuration Memory bank used at boot.
+|`SC_CFG_MEM_0` or `SC_CFG_MEM_1`
+
+|sc_get_cfgmem()
+|Gets the currently selected Configuration Memory bank.
+|`SC_CFG_MEM_0` or `SC_CFG_MEM_1`
+
+|sc_select_cfgmem(mem)
+|Selects Configuration Memory bank 0 or 1.
+|`0`: success +
+`-EINVAL`: invalid bank +
+`-ETIMEDOUT`: selection timed out
+
+|sc_select_codemem(mem)
+|Selects HRMEM or ITCMEM as the code memory.
+|None
+
+|sc_get_bootsts()
+|Gets the boot status register.
+|Boot status register value
+
+|sc_is_fallback()
+|Checks whether fallback boot occurred.
+|`true`: fallback boot +
+`false`: normal boot
+
+|sc_power_cycle()
+|Requests TRCH to perform a power cycle. After the power cycle, the system boots from the currently selected Configuration Memory bank.
+|None
+|===
+
+The driver is provided as an out-of-tree driver in the {github-a1-sample-fpga}[FPGA drivers].
+
+=== System Register sample
+
+The sample application is available in the {github-a1-sample-sysreg}[System Register sample] directory.
+It provides Zephyr shell commands for checking and selecting the Configuration Memory bank and for requesting a power cycle.
+
+== Sample code explanation
+
+=== Directory name
+
+This example uses `samples/sysreg` as the sample application directory.
+
+=== CMakeLists.txt
+
+Place `CMakeLists.txt` directly under the application directory.
+The following example configures the build for `src/main.c`.
+
+[source,cmake]
+----
+cmake_minimum_required(VERSION 3.20.0)
+
+find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
+project(system-register)
+
+target_sources(app PRIVATE src/main.c)
+----
+
+* *project*: Specify the project name.
+* *target_sources*: Specify the source code files.
+
+=== prj.conf
+
+Enable the Zephyr shell used by the sample commands.
+
+[source]
+----
+CONFIG_SHELL=y
+----
+
+=== Source code
+
+The following excerpts from `src/main.c` in the {github-a1-sample-sysreg}[System Register sample] explain shell command registration and the individual command handlers.
+
+==== Register Zephyr shell commands
+
+The {zephyr-shell}[Zephyr Shell] is a Unix-like command-line interface for interacting with a running Zephyr application.
+Shell commands are arranged in a tree of root commands and subcommands.
+Press `Tab` to complete a command or display the commands available at the current level, and use the Up and Down arrow keys to browse the command history.
+
+This sample registers `cfgmem` and `pwrcycle` as root commands.
+The `cfgmem` command has the static subcommands `show` and `select`, while `pwrcycle` runs directly without a subcommand.
+
+[source,text]
+----
+cfgmem
+├── show
+└── select <0|1>
+
+pwrcycle
+----
+
+The commands are registered in the application with the Zephyr Shell API.
+`SHELL_STATIC_SUBCMD_SET_CREATE` defines the `cfgmem` subcommands, and `SHELL_CMD_REGISTER` registers the root commands.
+The help strings passed to these macros are displayed by the shell.
+
+[source,c]
+----
+SHELL_STATIC_SUBCMD_SET_CREATE(cfgmem_cmds,
+			       SHELL_CMD_ARG(select, NULL,
+					     "Select Configuration Memory bank 0 or 1",
+					     cmd_cfgmem_select, 2, 0),
+			       SHELL_CMD(show, NULL,
+					 "Show the boot and current Configuration Memory banks",
+					 cmd_cfgmem_show),
+			       SHELL_SUBCMD_SET_END);
+
+SHELL_CMD_REGISTER(cfgmem, &cfgmem_cmds, "Configuration Memory commands", NULL);
+SHELL_CMD_REGISTER(pwrcycle, NULL, "Request TRCH to perform a power cycle via FPGA",
+		   cmd_power_cycle);
+----
+
+To list the available root commands, enter `help` or press `Tab` at an empty prompt.
+To display help for a command or subcommand, append `-h` or `--help`.
+
+[source,console]
+----
+uart:~$ cfgmem --help
+uart:~$ cfgmem select --help
+uart:~$ pwrcycle --help
+----
+
+==== Shell command list
+
+[options="header"]
+|===
+|Command |Description
+
+|`cfgmem show`
+|Shows the Configuration Memory bank used at boot and the currently selected bank.
+
+|`cfgmem select <0\|1>`
+|Selects Configuration Memory bank 0 or 1.
+
+|`pwrcycle`
+|Requests TRCH to perform a power cycle through the FPGA.
+|===
+
+==== `cfgmem show`
+
+The command calls `sc_get_boot_cfgmem()` and `sc_get_cfgmem()` and prints the boot bank number and current bank number to the shell.
+
+[source,c]
+----
+static int cmd_cfgmem_show(const struct shell *sh, size_t argc, char **argv)
+{
+	ARG_UNUSED(argc);
+	ARG_UNUSED(argv);
+
+	shell_print(sh, "Boot bank    : %d", sc_get_boot_cfgmem());
+	shell_print(sh, "Current bank : %d", sc_get_cfgmem());
+
+	return 0;
+}
+----
+
+==== `cfgmem select <0|1>`
+
+The command converts its argument to an integer and accepts only bank 0 or 1.
+It then calls `sc_select_cfgmem()` and reports an error if the bank cannot be selected.
+The API is called even if the requested bank is already selected, and the command reads back the bank number with `sc_get_cfgmem()` after selection.
+Selecting a bank does not restart the board or change the boot bank number.
+
+[source,c]
+----
+bank = shell_strtoul(argv[1], 10, &err);
+if (err != 0 || bank > SC_CFG_MEM_1) {
+	shell_error(sh, "Bank must be 0 or 1");
+	return -EINVAL;
+}
+
+ret = sc_select_cfgmem((enum sc_cfgmem)bank);
+if (ret < 0) {
+	shell_error(sh, "Failed to select Configuration Memory bank %lu: %d", bank, ret);
+	return ret;
+}
+
+shell_print(sh, "Current bank : %d", sc_get_cfgmem());
+----
+
+==== `pwrcycle`
+
+The command prints a message, waits for `CONSOLE_MESSAGE_DELAY` (100 ms), and then calls `sc_power_cycle()`.
+It then waits for `POWER_CYCLE_TIMEOUT` (1 second). If execution has not been interrupted by the power cycle, it prints `Power cycle request timed out` and returns `-ETIMEDOUT`.
+
+[source,c]
+----
+#define POWER_CYCLE_TIMEOUT   K_SECONDS(1)
+#define CONSOLE_MESSAGE_DELAY K_MSEC(100)
+----
+
+[source,c]
+----
+shell_print(sh, "Requesting TRCH to perform a power cycle via FPGA");
+
+/* Sleep to allow the message to appear on the console. */
+k_sleep(CONSOLE_MESSAGE_DELAY);
+
+sc_power_cycle();
+
+/*
+ * Print an error to the console if the power cycle does not complete
+ * within POWER_CYCLE_TIMEOUT.
+ */
+k_sleep(POWER_CYCLE_TIMEOUT);
+
+shell_error(sh, "Power cycle request timed out");
+
+return -ETIMEDOUT;
+----
+
+== Open the console
+
+Connect the SC-OBC Module A1 to the PC with a cable and open the console in a terminal.
+
+[source,console]
+----
+tio /dev/ttyUSB2
+----
+
+NOTE: To use the Zephyr console, bit3 (RX) and bit4 (TX) of DIP Switch (SW1) must be turned ON.
+
+== Build
+
+Specify the sample application directory containing `CMakeLists.txt` and `prj.conf` to build the application.
+
+[source,console]
+----
+cd ~/myproject
+source .venv/bin/activate
+west build -p always -b scobc_a1 --shield scobc_a1_dev scobc-a1-sample/samples/sysreg
+----
+
+== Flash
+
+Next, flash the application to the SC-OBC Module A1.
+
+[source,console]
+----
+west flash
+----
+
+== Check the output
+
+Display the boot bank and current bank.
+
+[source,console]
+----
+uart:~$ cfgmem show
+Boot bank    : 0
+Current bank : 0
+----
+
+Select bank 1 and confirm that the current bank changed.
+
+[source,console]
+----
+uart:~$ cfgmem select 1
+Current bank : 1
+uart:~$ cfgmem show
+Boot bank    : 0
+Current bank : 1
+----
+
+To restart the SC-OBC Module A1, run the following command to request a power cycle.
+If the power cycle succeeds, the bootloader startup log appears and the sample application restarts.
+
+[source,console]
+----
+uart:~$ pwrcycle
+Requesting TRCH to perform a power cycle via FPGA
+*** Booting Zephyr OS build v4.1.0-5645-g9075d5335596 ***
+SC-OBC Module A1 Bootloader Ver 1.0.0
+Load from Configuration Memory address : 0x01a00000
+*** Booting Zephyr OS build sc-norflash-v1.0.0-1-g998d940ad6c6 ***
+
+uart:~$
+----
+
+To exit `tio`, press `Ctrl+t`, and then press `q`.
