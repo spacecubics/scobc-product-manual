@@ -4,9 +4,11 @@
 :github-a1-sample-helloworld: https://github.com/spacecubics/scobc-a1-sample/tree/main/samples/hello_world
 :github-a1-sample-i2c: https://github.com/spacecubics/scobc-a1-sample/tree/main/samples/i2c
 :github-a1-sample-sysmon: https://github.com/spacecubics/scobc-a1-sample/tree/main/samples/sysmon
+:github-a1-sample-sysreg: https://github.com/spacecubics/scobc-a1-sample/tree/main/samples/sysreg
 :ms-wsl-usb-connect: https://learn.microsoft.com/en-us/windows/wsl/connect-usb
 :zephyr-build-dts: https://docs.zephyrproject.org/latest/build/dts/index.html
 :zephyr-develop-t2: https://docs.zephyrproject.org/latest/develop/west/workspaces.html#t2-star-topology-application-is-the-manifest-repository
 :zephyr-getting-started: https://docs.zephyrproject.org/latest/develop/getting_started/index.html
 :zephyr-install-dependencies: https://docs.zephyrproject.org/latest/develop/getting_started/index.html#install-dependencies
 :zephyr-kconfig-picolibc-float: https://docs.zephyrproject.org/latest/kconfig.html#CONFIG_PICOLIBC_IO_FLOAT
+:zephyr-shell: https://docs.zephyrproject.org/latest/services/shell/index.html

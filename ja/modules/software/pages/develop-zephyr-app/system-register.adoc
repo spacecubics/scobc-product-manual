@@ -1,0 +1,327 @@
+= System Register サンプル
+
+include::scobc-a1:software:partial$link-attributes.adoc[]
+
+このセクションでは、T2 トポロジーベースのリポジトリ内で *System Register* アプリケーションをビルドして実行する例を示します。
+
+== System Register とは
+
+System Register は、SC-OBC Module A1 FPGA のシステム制御を担うレジスタ群で構成されます。
+レジスタ構成と各ビットの詳細は、 https://docs.spacecubics.com/scobc-a1-ja/latest/fpga/system_register.html[System Register] を参照してください。
+主な機能は次のとおりです。
+
+メモリの選択と起動状態::
+CPU のコードメモリ (ITCM / HRMEM) の選択、Configuration Flash Memory の選択と起動時のバンクの確認、およびフォールバックを含む起動状態の取得を行います。
+
+クロックと電源の制御::
+システムクロックの設定と PLL 情報の取得、スリープ時の低消費電力制御、および TRCH への Power Cycle 要求を行います。
+
+作業用レジスタと FPGA 情報::
+ソフトウェア用の Scratchpad レジスタに加え、System Register IP バージョン、FPGA ビルド情報、および Device DNA を読み出すレジスタを備えています。
+
+このサンプルでは、Zephyr ドライバを使用し、Configuration Memory バンクの確認と選択、および Power Cycle 要求を行います。
+
+=== System Register ドライバ
+
+現在、FPGA System Register ドライバは、以下の API を提供します。
+
+[[system-register-api]]
+.System Register Driver API List
+[options="header"]
+|===
+|API |概要 |戻り値
+
+|sc_get_fpga_ip_ver()
+|FPGA IP バージョンを取得する
+|FPGA IP バージョン
+
+|sc_get_fpga_build_hash()
+|FPGA のビルドハッシュを取得する
+|FPGA のビルドハッシュ
+
+|sc_get_fpga_dna_1() / sc_get_fpga_dna_2()
+|2個の32-bit FPGA DNA値を取得する
+|FPGA DNA値
+
+|sc_get_boot_cfgmem()
+|起動時に使用した Configuration Memory バンクを取得する
+|`SC_CFG_MEM_0` または `SC_CFG_MEM_1`
+
+|sc_get_cfgmem()
+|現在選択されている Configuration Memory バンクを取得する
+|`SC_CFG_MEM_0` または `SC_CFG_MEM_1`
+
+|sc_select_cfgmem(mem)
+|Configuration Memory のバンク0または1を選択する
+|`0`: 成功 +
+`-EINVAL`: バンク指定が不正 +
+`-ETIMEDOUT`: バンクの切り替えがタイムアウト
+
+|sc_select_codemem(mem)
+|コードメモリとして HRMEM または ITCMEM を選択する
+|なし
+
+|sc_get_bootsts()
+|ブートステータスレジスタを取得する
+|ブートステータスレジスタ値
+
+|sc_is_fallback()
+|フォールバックブートが発生したか確認する
+|`true`: フォールバックブート +
+`false`: 通常ブート
+
+|sc_power_cycle()
+|TRCH に電源サイクルを要求する。電源サイクル後、現在選択されている Configuration Memory バンクから起動する
+|なし
+|===
+
+ドライバは out-of-tree ドライバとして {github-a1-sample-fpga}[FPGA drivers] で提供されています。
+
+=== System Register サンプル
+
+サンプルアプリケーションは {github-a1-sample-sysreg}[System Register sample] にあります。
+Zephyr shell から Configuration Memory バンクの確認と選択、および電源サイクルの要求ができます。
+
+== サンプルコードの説明
+
+=== ディレクトリ名
+
+この例では、サンプルアプリケーションのディレクトリ名として `samples/sysreg` を使用します。
+
+=== CMakeLists.txt
+
+`CMakeLists.txt` はアプリケーションディレクトリの直下に配置します。
+以下は `src/main.c` をビルドするための設定例です。
+
+[source,cmake]
+----
+cmake_minimum_required(VERSION 3.20.0)
+
+find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
+project(system-register)
+
+target_sources(app PRIVATE src/main.c)
+----
+
+* *project*: プロジェクト名を指定します。
+* *target_sources*: ソースコードファイルを指定します。
+
+=== prj.conf
+
+サンプルで使用する Zephyr shell を有効にします。
+
+[source]
+----
+CONFIG_SHELL=y
+----
+
+=== ソースコード
+
+{github-a1-sample-sysreg}[System Register sample] の `src/main.c` から、shell コマンドの登録と各コマンドの処理を抜粋して説明します。
+
+==== Zephyr shell コマンドの登録
+
+{zephyr-shell}[Zephyr Shell] は、実行中の Zephyr アプリケーションを操作するための Unix ライクなコマンドラインインターフェースです。
+shell コマンドは、ルートコマンドとサブコマンドからなるツリー構造で構成されます。
+`Tab` キーを押すとコマンドを補完したり、現在の階層で使用できるコマンドを表示したりできます。また、上下の矢印キーでコマンド履歴を参照できます。
+
+このサンプルでは、`cfgmem` と `pwrcycle` をルートコマンドとして登録しています。
+`cfgmem` には静的サブコマンドの `show` と `select` があり、`pwrcycle` はサブコマンドを指定せずに直接実行します。
+
+[source,text]
+----
+cfgmem
+├── show
+└── select <0|1>
+
+pwrcycle
+----
+
+これらのコマンドは Zephyr Shell API を使用してアプリケーションへ登録されています。
+`SHELL_STATIC_SUBCMD_SET_CREATE` で `cfgmem` のサブコマンドを定義し、`SHELL_CMD_REGISTER` でルートコマンドを登録しています。
+各マクロに渡したヘルプ文字列は shell 上で表示されます。
+
+[source,c]
+----
+SHELL_STATIC_SUBCMD_SET_CREATE(cfgmem_cmds,
+			       SHELL_CMD_ARG(select, NULL,
+					     "Select Configuration Memory bank 0 or 1",
+					     cmd_cfgmem_select, 2, 0),
+			       SHELL_CMD(show, NULL,
+					 "Show the boot and current Configuration Memory banks",
+					 cmd_cfgmem_show),
+			       SHELL_SUBCMD_SET_END);
+
+SHELL_CMD_REGISTER(cfgmem, &cfgmem_cmds, "Configuration Memory commands", NULL);
+SHELL_CMD_REGISTER(pwrcycle, NULL, "Request TRCH to perform a power cycle via FPGA",
+		   cmd_power_cycle);
+----
+
+使用可能なルートコマンドの一覧を表示するには、`help` を入力するか、空のプロンプトで `Tab` キーを押します。
+コマンドまたはサブコマンドのヘルプを表示するには、末尾に `-h` または `--help` を指定します。
+
+[source,console]
+----
+uart:~$ cfgmem --help
+uart:~$ cfgmem select --help
+uart:~$ pwrcycle --help
+----
+
+==== shell コマンド一覧
+
+[options="header"]
+|===
+|コマンド |概要
+
+|`cfgmem show`
+|起動時に使用した Configuration Memory バンクと、現在選択されているバンクを表示する
+
+|`cfgmem select <0\|1>`
+|Configuration Memory のバンク0または1を選択する
+
+|`pwrcycle`
+|FPGA を介して TRCH に Power Cycle を要求する。
+|===
+
+==== `cfgmem show`
+
+`sc_get_boot_cfgmem()` と `sc_get_cfgmem()` を呼び出し、起動時のバンク番号と現在のバンク番号を shell に表示します。
+
+[source,c]
+----
+static int cmd_cfgmem_show(const struct shell *sh, size_t argc, char **argv)
+{
+	ARG_UNUSED(argc);
+	ARG_UNUSED(argv);
+
+	shell_print(sh, "Boot bank    : %d", sc_get_boot_cfgmem());
+	shell_print(sh, "Current bank : %d", sc_get_cfgmem());
+
+	return 0;
+}
+----
+
+==== `cfgmem select <0|1>`
+
+引数を整数へ変換し、バンク0または1のみを受け付けます。
+続いて `sc_select_cfgmem()` を呼び出し、バンクを選択できなかった場合はエラーを表示します。
+現在と同じバンクが指定された場合も API を呼び出し、選択後に `sc_get_cfgmem()` で読み直したバンク番号を表示します。
+バンクを選択するだけでは再起動せず、起動時のバンク番号も変わりません。
+
+[source,c]
+----
+bank = shell_strtoul(argv[1], 10, &err);
+if (err != 0 || bank > SC_CFG_MEM_1) {
+	shell_error(sh, "Bank must be 0 or 1");
+	return -EINVAL;
+}
+
+ret = sc_select_cfgmem((enum sc_cfgmem)bank);
+if (ret < 0) {
+	shell_error(sh, "Failed to select Configuration Memory bank %lu: %d", bank, ret);
+	return ret;
+}
+
+shell_print(sh, "Current bank : %d", sc_get_cfgmem());
+----
+
+==== `pwrcycle`
+
+メッセージを表示し、`CONSOLE_MESSAGE_DELAY` (100 ms) だけ待機してから `sc_power_cycle()` を呼び出します。
+その後、`POWER_CYCLE_TIMEOUT` (1秒) だけ待機します。電源サイクルによって実行が中断されなかった場合は、`Power cycle request timed out` を表示して `-ETIMEDOUT` を返します。
+
+[source,c]
+----
+#define POWER_CYCLE_TIMEOUT   K_SECONDS(1)
+#define CONSOLE_MESSAGE_DELAY K_MSEC(100)
+----
+
+[source,c]
+----
+shell_print(sh, "Requesting TRCH to perform a power cycle via FPGA");
+
+/* Sleep to allow the message to appear on the console. */
+k_sleep(CONSOLE_MESSAGE_DELAY);
+
+sc_power_cycle();
+
+/*
+ * Print an error to the console if the power cycle does not complete
+ * within POWER_CYCLE_TIMEOUT.
+ */
+k_sleep(POWER_CYCLE_TIMEOUT);
+
+shell_error(sh, "Power cycle request timed out");
+
+return -ETIMEDOUT;
+----
+
+== コンソールを開く
+
+SC-OBC Module A1 と PC の間をケーブルで接続し、端末でコンソールを開きます。
+
+[source,console]
+----
+tio /dev/ttyUSB2
+----
+
+NOTE: Zephyr コンソールを使用するには、DIP スイッチ (SW1) の bit3 (RX) と bit4 (TX) を ON にする必要があります。
+
+== ビルド
+
+`CMakeLists.txt` と `prj.conf` が配置されているサンプルアプリケーションのディレクトリを指定して、以下のようにビルドします。
+
+[source,console]
+----
+cd ~/myproject
+source .venv/bin/activate
+west build -p always -b scobc_a1 --shield scobc_a1_dev scobc-a1-sample/samples/sysreg
+----
+
+== 書き込み
+
+次に、SC-OBC Module A1 に書き込みます。
+
+[source,console]
+----
+west flash
+----
+
+== 確認
+
+起動時のバンクと現在のバンクを表示します。
+
+[source,console]
+----
+uart:~$ cfgmem show
+Boot bank    : 0
+Current bank : 0
+----
+
+バンク1を選択し、現在のバンクが切り替わったことを確認します。
+
+[source,console]
+----
+uart:~$ cfgmem select 1
+Current bank : 1
+uart:~$ cfgmem show
+Boot bank    : 0
+Current bank : 1
+----
+
+SC-OBC Module A1 を再起動する場合には、以下のコマンドを実行して Power Cycle を要求します。
+Power Cycle が成功すれば、Bootloaderの起動ログが表示され、サンプルアプリケーションが再起動します。
+
+[source,console]
+----
+uart:~$ pwrcycle
+Requesting TRCH to perform a power cycle via FPGA
+*** Booting Zephyr OS build v4.1.0-5645-g9075d5335596 ***
+SC-OBC Module A1 Bootloader Ver 1.0.0
+Load from Configuration Memory address : 0x01a00000
+*** Booting Zephyr OS build sc-norflash-v1.0.0-1-g998d940ad6c6 ***
+
+uart:~$
+----
+
+`tio` コンソールを終了するには、`Ctrl+t` を押した後に `q` を押します。
